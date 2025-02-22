@@ -1,0 +1,91 @@
+# Learn more: https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+##############################
+# Global Ignores (all projects)
+##############################
+
+# Logs and debug files
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# OS generated files
+.DS_Store
+*.pem
+
+# Local environment files (global)
+.env*.local
+
+##############################
+# Frontend (React Native / Expo)
+##############################
+
+# Node dependencies for frontend
+/frontend/node_modules/
+
+# Expo / React Native specific files and directories
+/frontend/.expo/
+frontend/dist/
+frontend/web-build/
+frontend/expo-env.d.ts
+
+# Frontend environment file
+/frontend/.env
+
+##############################
+# Backend (Spring Boot)
+##############################
+
+# Build output for backend (Maven/Gradle)
+backend/target/
+backend/build/
+
+# Backend environment file
+/backend/.env
+
+##############################
+# IDE and Editor Files (global)
+##############################
+
+## STS (Spring Tools Suite) ##
+backend/.apt_generated
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings
+backend/.springBeans
+backend/.sts4-cache
+
+## IntelliJ IDEA ##
+backend/.idea/
+backend/*.iws
+backend/*.iml
+backend/*.ipr
+
+## STS (Spring Tools Suite) ##
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+## IntelliJ IDEA ##
+.idea/
+*.iws
+*.iml
+*.ipr
+
+## NetBeans ##
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+/backend/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+## VS Code ##
+.vscode/
+backend/.vscode/
