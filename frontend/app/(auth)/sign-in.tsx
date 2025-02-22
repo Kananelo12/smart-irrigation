@@ -1,12 +1,73 @@
-import { Text, View } from 'react-native'
-import React from 'react'
+import { Image, ScrollView, Text, View } from "react-native";
+import React, { useState } from "react";
+import images from "@/constants/images";
+import InputField from "@/components/InputField";
+import icons from "@/constants/icons";
+import CustomButton from "@/components/CustomButton";
+import { Link, router } from "expo-router";
+import GoogleOAuth from "@/components/GoogleOAuth";
 
 const SignIn = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleLogin = async () => {
+    router.push("/(tabs)/home");
+  };
+
   return (
-    <View>
-      <Text>SignIn</Text>
-    </View>
-  )
-}
+    <ScrollView className="flex-1 bg-white">
+      <View className="flex-1 bg-white">
+        <View className="relative w-full h-[250px]">
+          <View className="justify-center h-full p-5">
+            <Image source={images.logo} className="z-0 w-[177px] h-[38px] mt-5" resizeMode="contain" />
+          </View>
+          <Text className="text-2xl text-black-300 font-rubik-semibold absolute bottom-5 left-5">
+            Welcome back
+          </Text>
+        </View>
+
+        <View className="p-5">
+          <InputField
+            label="Email"
+            placeholder="Enter your email"
+            icon={icons.email}
+            value={form.email}
+            onChangeText={(value) => setForm({ ...form, email: value })}
+          />
+          <InputField
+            label="Password"
+            placeholder="Enter your password"
+            icon={icons.email}
+            secureTextEntry={true}
+            value={form.password}
+            onChangeText={(value) => setForm({ ...form, password: value })}
+          />
+
+          <CustomButton
+            title="Log In"
+            handlePress={handleLogin}
+            containerStyles="mt-7"
+          />
+
+          {/* TODO: OAuth */}
+          <GoogleOAuth />
+
+          <Link
+            href="/sign-up"
+            className="text-lg text-center text-black-100 mt-10"
+          >
+            <Text>Don't have an account yet? </Text>
+            <Text className="text-primary-300">Sign up</Text>
+          </Link>
+        </View>
+
+        {/* TODO: verification modal */}
+      </View>
+    </ScrollView>
+  );
+};
 
 export default SignIn;

@@ -2,6 +2,7 @@ import { SplashScreen, Stack } from "expo-router";
 import "./globals.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 
 export default function RootLayout() {
   // Load custom fonts before rendering the app
@@ -27,8 +28,12 @@ export default function RootLayout() {
 
   // Render the navigation stack once fonts are loaded
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-    </Stack>
+    <>
+      <StatusBar style="dark" />
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      </Stack>
+    </>
   );
 }
