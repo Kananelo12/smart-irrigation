@@ -1,8 +1,6 @@
 import { Link, Redirect, router } from "expo-router";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
 import images from "@/constants/images";
 import CustomButton from "@/components/CustomButton";
 

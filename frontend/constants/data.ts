@@ -21,6 +21,44 @@ export const farms = [
   },
 ];
 
+export const notifications = [
+  {
+    id: "1",
+    title: "Sensors Detected Heat",
+    description: "High temperature detected in the field. Consider increasing irrigation.",
+    time: "Now",
+    category: "Today",
+  },
+  {
+    id: "2",
+    title: "Rain Detected",
+    description: "Rainfall detected in the area. Irrigation postponed.",
+    time: "Now",
+    category: "Today",
+  },
+  {
+    id: "3",
+    title: "Soil Moisture Low",
+    description: "Soil moisture levels are below the optimal range. Irrigation initiated.",
+    time: "12:14 PM",
+    category: "Yesterday",
+  },
+  {
+    id: "4",
+    title: "Pump Malfunction Alert",
+    description: "An issue detected with the water pump. Check system status.",
+    time: "18:00 PM",
+    category: "Last week",
+  },
+  {
+    id: "5",
+    title: "Irrigation System Activated",
+    description: "Irrigation system started automatically.",
+    time: "9:41 AM",
+    category: "Last week",
+  },
+];
+
 // Featured Crops
 export const featuredCrops = [
   {
