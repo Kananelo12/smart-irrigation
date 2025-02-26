@@ -1,12 +1,163 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
+import images from "@/constants/images";
+import icons from "@/constants/icons";
+import SearchBox from "@/components/SearchBox";
+import CustomButton from "@/components/CustomButton";
+import tw from 'tailwind-react-native-classnames';
+
 
 const Home = () => {
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  )
-}
+  const handleIrrigate = () => {};
 
-export default Home
+  return (
+    <SafeAreaView className="bg-[#F6F8FA] h-full">
+      <View className="px-6">
+        <View className="flex flex-row items-center justify-between mt-7">
+          <View className="flex flex-row items-center">
+            <Image
+              source={images.farmerPic}
+              className="size-14 rounded-full"
+              resizeMode="contain"
+            />
+            <View className="flex flex-col items-start ml-2 justify-center">
+              <Text className="text-sm font-rubik text-black-100">
+                Good Morning
+              </Text>
+              <Text className="text-lg font-rubik-medium text-black-300">
+                Profile Username
+              </Text>
+            </View>
+          </View>
+          <View className="bg-white w-12 h-12 items-center justify-center rounded-full">
+            <Image
+              source={icons.darkMode}
+              className="size-6"
+              resizeMode="contain"
+            />
+          </View>
+        </View>
+
+        {/* search box component */}
+        <SearchBox />
+
+        {/* Weather information */}
+        <View className="w-full flex flex-col mt-7 relative mb-36">
+          {/* Gradient Background View */}
+          <LinearGradient
+            colors={["#54C1F6", "#2A9EF0"]} // from your previous stops
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.8, y: 1.3 }}
+            style={[tw`rounded-3xl`, { overflow: 'hidden' }]} // using tailwind classes with an extra style
+            className="flex-row w-full h-[165px] items-center justify-between shadow-2xl rounded-3xl z-10"
+          >
+            <View>
+              <Image source={images.weather} className="size-56" />
+            </View>
+            <View className="flex-col mr-12">
+              <Text className="font-rubik-medium text-xl text-white">
+                Today
+              </Text>
+              <Text className="font-rubik-bold text-3xl text-white">
+                17° / 27°
+              </Text>
+              <Text className="font-rubik text-base text-white">
+                Sunny - Cloudy
+              </Text>
+            </View>
+          </LinearGradient>
+
+          <View className="bg-white flex-row items-end justify-between w-full h-[165px] shadow-md rounded-3xl px-8 absolute top-28">
+            <View className="items-center justify-center mb-8">
+              <Image
+                source={icons.humidity}
+                className="size-5"
+                resizeMode="contain"
+              />
+              <Text className="text-sm font-rubik">Humidity</Text>
+              <Text className="text-sm font-rubik">77%</Text>
+            </View>
+            <View className="items-center justify-center mb-8">
+              <Image
+                source={icons.wind}
+                className="size-5"
+                resizeMode="contain"
+              />
+              <Text className="text-sm font-rubik">Wind</Text>
+              <Text className="text-sm font-rubik">8km/h</Text>
+            </View>
+            <View className="items-center justify-center mb-8">
+              <Image
+                source={icons.precipitation}
+                className="size-5"
+                resizeMode="contain"
+              />
+              <Text className="text-sm font-rubik">Precipitation</Text>
+              <Text className="text-sm font-rubik">32%</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* parameter readings */}
+        <View className="">
+          <View className="flex-row justify-between">
+            <Text className="font-rubik-medium text-base text-black-300">
+              My Farm
+            </Text>
+            <Text className="font-rubik text-sm text-black-400">Tomatoes</Text>
+          </View>
+
+          <View className="flex-row items-center justify-between mt-6 mb-5">
+            <View className="items-center justify-center">
+              <View className="w-16 h-16 border border-[#0F93FF] items-center justify-center rounded-full mb-3">
+                <Text className="font-rubik-medium text-base text-black-400">
+                  77
+                </Text>
+                <Text className="font-rubik text-xs text-[#B5BFC8]">%</Text>
+              </View>
+              <Text className="font-rubik text-sm text-black-400">
+                Humidity
+              </Text>
+            </View>
+            <View className="items-center justify-center">
+              <View className="w-16 h-16 border border-[#FF2222] items-center justify-center rounded-full mb-3">
+                <Text className="font-rubik-medium text-base text-black-400">
+                  23
+                </Text>
+                <Text className="font-rubik text-xs text-[#B5BFC8]">%</Text>
+              </View>
+              <Text className="font-rubik text-sm text-black-400">
+                Soil Moisture
+              </Text>
+            </View>
+            <View className="items-center justify-center">
+              <View className="w-16 h-16 border border-primary-300 items-center justify-center rounded-full mb-3">
+                <Text className="font-rubik-medium text-base text-black-400">
+                  77
+                </Text>
+                <Text className="font-rubik text-xs text-[#B5BFC8]">°C</Text>
+              </View>
+              <Text className="font-rubik text-sm text-black-400">
+                Temperature
+              </Text>
+            </View>
+          </View>
+
+          {/* irigate button */}
+          <TouchableOpacity
+            className="bg-primary-300 w-36 py-3 rounded-3xl items-center justify-center mt-5"
+            activeOpacity={0.6}
+          >
+            <Text className="font-rubik-medium text-base text-white">
+              Irrigate
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default Home;
