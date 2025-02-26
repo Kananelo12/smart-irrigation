@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
 import images from "@/constants/images";
 import InputField from "@/components/InputField";
@@ -14,7 +14,37 @@ const SignIn = () => {
   });
 
   const handleLogin = async () => {
-    router.push("/(tabs)/home");
+    // check for null or empty fields
+    if (!form.email || !form.password) {
+      Alert.alert('Error', "Please fill in both fields");
+      return;
+    }
+    // TODO: add validation for email syntax using expressions
+    // TODO: add validation for password length and security
+    try {
+      console.log(`Username: ${form.email}\nPassword: ${form.password}`);
+      const response = await fetch("http://192.168.162.178:8080/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: form.email, // backend expects key of username, not 'email'
+          password: form.password,
+        }),
+      });
+
+      if (response.ok) {
+        const message = await response.text();
+        Alert.alert("Success", message);
+        // redirect to home screen
+        router.push("/(tabs)/home");
+      } else {
+        const errorMessage = await response.text();
+        Alert.alert("Error", errorMessage);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Unable to connect to the server");
+      console.error(error);
+    }
   };
 
   return (
@@ -22,7 +52,11 @@ const SignIn = () => {
       <View className="flex-1 bg-white">
         <View className="relative w-full h-[250px]">
           <View className="justify-center h-full p-5">
-            <Image source={images.logo} className="z-0 w-[177px] h-[38px] mt-5" resizeMode="contain" />
+            <Image
+              source={images.logo}
+              className="z-0 w-[177px] h-[38px] mt-5"
+              resizeMode="contain"
+            />
           </View>
           <Text className="text-2xl text-black-300 font-rubik-semibold absolute bottom-5 left-5">
             Welcome back

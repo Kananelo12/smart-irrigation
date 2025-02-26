@@ -1,10 +1,10 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
 import images from "@/constants/images";
 import InputField from "@/components/InputField";
 import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
 
 const SignUp = () => {
@@ -14,7 +14,37 @@ const SignUp = () => {
     password: "",
   });
 
-  const handleSignUp = async () => {};
+  const handleSignUp = async () => {
+    if (!form.name || !form.email || !form.password) {
+      Alert.alert("Error", "Please fill in all the fields!");
+      return;
+    }
+    try {
+      console.log(`\nFull names: ${form.name}\nUsername: ${form.email}\nPassword: ${form.password}`);
+      const response = await fetch("http://192.168.162.178:8080/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          username: form.email, // backend expects key of username, not 'email'
+          password: form.password,
+        }),
+      });
+
+      if (response.ok) {
+        const message = await response.text();
+        Alert.alert("Success", message);
+        // redirect to login page
+        router.push("/sign-in");
+      } else {
+        const errorMessage = await response.text();
+        Alert.alert("Error", errorMessage);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Unable to connect to the server");
+      console.log(error);
+    }
+  };
 
   return (
     <ScrollView className="flex-1 bg-white">
