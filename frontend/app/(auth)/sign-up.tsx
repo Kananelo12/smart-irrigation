@@ -21,7 +21,7 @@ const SignUp = () => {
     }
     try {
       console.log(`\nFull names: ${form.name}\nUsername: ${form.email}\nPassword: ${form.password}`);
-      const response = await fetch("http://192.168.162.178:8080/api/register", {
+      const response = await fetch("http://192.168.137.1:8080/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

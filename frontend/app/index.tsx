@@ -3,9 +3,11 @@ import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import CustomButton from "@/components/CustomButton";
+import { useEffect, useState } from "react";
 
 // TODO: THIS IS THE WELCOME PAGE | ONBOARDING
 export default function Index() {
+
   const handlePress = () => {
     router.push("/sign-in");
   };

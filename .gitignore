@@ -46,6 +46,7 @@ backend/build/
 ##############################
 # IDE and Editor Files (global)
 ##############################
+.expo
 
 ## STS (Spring Tools Suite) ##
 backend/.apt_generated
