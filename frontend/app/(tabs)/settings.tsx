@@ -1,13 +1,24 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, Alert } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import icons from "@/constants/icons";
 import { router } from "expo-router";
+import { logout } from "@/libs/appwrite";
+import { useGlobalContext } from "@/libs/GlobalProvider";
 
 const Settings = () => {
-  // TODO: modify to handle actual logic
-  const handleLogout = () => {
-    router.push("/");
+  const { refetch } = useGlobalContext();
+
+  const handleLogout = async () => {
+    const result = await logout();
+
+    if (result) {
+      Alert.alert("success", "You have been logged out successfully");
+      await refetch();
+      router.push("/sign-in"); // Redirect to sign-in page
+    } else {
+      Alert.alert("Error", "An error occurred while logging out!");
+    }
   };
 
   return (
@@ -55,11 +66,15 @@ const Settings = () => {
           <View className="w-full my-6 h-[1px] bg-[#E2E2E2]"></View>
           <View className="flex-row items-center gap-3">
             <Image source={icons.logout} className="w-7 h-7" />
-            <Text className="font-rubik text-lg mt-1" onPress={handleLogout}>Log out</Text>
+            <Text className="font-rubik text-lg mt-1" onPress={handleLogout}>
+              Log out
+            </Text>
           </View>
           <View className="flex-row items-center gap-3">
             <Image source={icons.stackLine} className="w-7 h-7" />
-            <Text className="font-rubik text-lg mt-1">Version 1.0.0 Build 123</Text>
+            <Text className="font-rubik text-lg mt-1">
+              Version 1.0.0 Build 123
+            </Text>
           </View>
         </View>
       </ScrollView>
