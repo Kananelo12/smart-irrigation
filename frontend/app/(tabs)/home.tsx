@@ -7,9 +7,12 @@ import icons from "@/constants/icons";
 import SearchBox from "@/components/SearchBox";
 import CustomButton from "@/components/CustomButton";
 import tw from 'tailwind-react-native-classnames';
+import { useGlobalContext } from "@/libs/GlobalProvider";
 
 
 const Home = () => {
+  const { user } = useGlobalContext();
+
   const handleIrrigate = () => {};
 
   return (
@@ -27,7 +30,7 @@ const Home = () => {
                 Good Morning
               </Text>
               <Text className="text-lg font-rubik-medium text-black-300">
-                Profile Username
+                {user?.name}
               </Text>
             </View>
           </View>
