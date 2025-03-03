@@ -1,53 +1,30 @@
-import { ActivityIndicator, Alert, Image, ScrollView, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
+import React, { useState } from "react";
 import images from "@/constants/images";
 import InputField from "@/components/InputField";
 import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
-import { Link, Redirect, router } from "expo-router";
+import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
-import { login } from "@/libs/appwrite";
-import { useGlobalContext } from "@/libs/GlobalProvider";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignIn = () => {
-  const { refetch, loading, isLoggedIn } = useGlobalContext();
-  // if (!loading && isLoggedIn) return <Redirect href="/(tabs)/home" />;
-
-  // useEffect to watch for changes in loading and isLoggedIn
-  useEffect(() => {
-    if (!loading && isLoggedIn) {
-      router.push("/(tabs)/home");
-    }
-  }, [loading, isLoggedIn]);
-
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const handleGoogleAuth = async () => {
-    const result = await login();
-
-    if (result) {
-      // Update global state asynchronously
-      refetch();
-    } else {
-      Alert.alert("Error", "Failed to login");
-    }
-  };
-
   const handleLogin = async () => {
+
     // check for null or empty fields
     if (!form.email || !form.password) {
-      Alert.alert("Error", "Please fill in both fields");
+      Alert.alert('Error', "Please fill in both fields");
       return;
     }
     // TODO: add validation for email syntax using expressions
     // TODO: add validation for password length and security
     try {
       console.log(`\nUsername: ${form.email}\nPassword: ${form.password}`);
-      const response = await fetch(`http://192.168.162.178.1:8080/api/login`, {
+      const response = await fetch(`http://192.168.137.1:8080/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -111,7 +88,7 @@ const SignIn = () => {
           />
 
           {/* TODO: OAuth */}
-          <GoogleOAuth handlePress={handleGoogleAuth} />
+          <GoogleOAuth />
 
           <Link
             href="/sign-up"

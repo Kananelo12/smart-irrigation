@@ -31,7 +31,6 @@ frontend/expo-env.d.ts
 
 # Frontend environment file
 /frontend/.env
-/frontend/.env.local
 
 ##############################
 # Backend (Spring Boot)

@@ -1,10 +1,11 @@
-import { View, Text, Image, Alert } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import GoogleButton from "./GoogleButton";
 import icons from "@/constants/icons";
-import { login } from "@/libs/appwrite";
 
-const GoogleOAuth = ({ handlePress }: { handlePress: any }) => {
+const GoogleOAuth = () => {
+  
+  const handleGoogleSignIn = async () => {};
 
   return (
     <View>
@@ -26,7 +27,7 @@ const GoogleOAuth = ({ handlePress }: { handlePress: any }) => {
         )}
         bgVariant="outline"
         textVariant="primary"
-        onPress={handlePress}
+        onPress={handleGoogleSignIn}
       />
     </View>
   );

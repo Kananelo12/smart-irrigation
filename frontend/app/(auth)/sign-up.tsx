@@ -6,27 +6,13 @@ import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
-import { login } from "@/libs/appwrite";
-import { useGlobalContext } from "@/libs/GlobalProvider";
 
 const SignUp = () => {
-  const { refetch, loading, isLoggedIn } = useGlobalContext();
-
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
   });
-
-  const handleGoogleAuth = async () => {
-    const result = await login();
-
-    if (result) {
-      refetch();
-    } else {
-      Alert.alert("Error", "Failed to login");
-    }
-  };
 
   const handleSignUp = async () => {
     if (!form.name || !form.email || !form.password) {
@@ -34,10 +20,8 @@ const SignUp = () => {
       return;
     }
     try {
-      console.log(
-        `\nFull names: ${form.name}\nUsername: ${form.email}\nPassword: ${form.password}`
-      );
-      const response = await fetch("http://192.168.162.178:8080/api/register", {
+      console.log(`\nFull names: ${form.name}\nUsername: ${form.email}\nPassword: ${form.password}`);
+      const response = await fetch("http://192.168.137.1:8080/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -67,11 +51,7 @@ const SignUp = () => {
       <View className="flex-1 bg-white">
         <View className="relative w-full h-[250px]">
           <View className="justify-center h-full p-5">
-            <Image
-              source={images.logo}
-              className="z-0 w-[177px] h-[38px] mt-5"
-              resizeMode="contain"
-            />
+            <Image source={images.logo} className="z-0 w-[177px] h-[38px] mt-5" resizeMode="contain" />
           </View>
           {/* <Image source={images.carSignUp} className="z-0 w-full h-[250px]" /> */}
           <Text className="text-2xl text-black-300 font-rubik-semibold absolute bottom-5 left-5">
@@ -110,7 +90,7 @@ const SignUp = () => {
           />
 
           {/* TODO: OAuth */}
-          <GoogleOAuth handlePress={handleGoogleAuth} />
+          <GoogleOAuth />
 
           <Link
             href="/sign-in"
