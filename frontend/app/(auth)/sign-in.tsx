@@ -13,18 +13,22 @@ const SignIn = () => {
     password: "",
   });
 
-  const handleLogin = async () => {
+  const testMode = () => {
+    Alert.alert("Test Mode", "Redirecting to home screen");
+    router.push("/(tabs)/home");
+  };
 
+  const handleLogin = async () => {
     // check for null or empty fields
     if (!form.email || !form.password) {
-      Alert.alert('Error', "Please fill in both fields");
+      Alert.alert("Error", "Please fill in both fields");
       return;
     }
     // TODO: add validation for email syntax using expressions
     // TODO: add validation for password length and security
     try {
       console.log(`\nUsername: ${form.email}\nPassword: ${form.password}`);
-      const response = await fetch(`http://192.168.137.1:8080/api/login`, {
+      const response = await fetch(`http://192.168.113.178:8080/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -43,7 +47,10 @@ const SignIn = () => {
         Alert.alert("Error", errorMessage);
       }
     } catch (error) {
-      Alert.alert("Error", "Unable to connect to the server");
+      Alert.alert("Error", "Unable to connect to the server", [
+        { text: "Cancel", style: "cancel" },
+        { text: "Test Mode", onPress: testMode },
+      ]);
       console.error(error);
     }
   };

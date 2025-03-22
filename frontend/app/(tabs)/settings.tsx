@@ -54,8 +54,8 @@ const Settings = () => {
           </View>
           <View className="w-full my-6 h-[1px] bg-[#E2E2E2]"></View>
           <View className="flex-row items-center gap-3">
-            <Image source={icons.logout} className="w-7 h-7" />
-            <Text className="font-rubik text-lg mt-1" onPress={handleLogout}>Log out</Text>
+            <Image source={icons.logout} tintColor="#F56565" className="w-7 h-7" />
+            <Text className="font-rubik text-lg mt-1 text-danger-500" onPress={handleLogout}>Log out</Text>
           </View>
           <View className="flex-row items-center gap-3">
             <Image source={icons.stackLine} className="w-7 h-7" />

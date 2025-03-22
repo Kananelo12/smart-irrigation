@@ -3,10 +3,13 @@ import "./globals.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ActivityIndicator, Text } from "react-native";
+import { WeatherProvider } from "@/libs/WeatherProvider";
 
 export default function RootLayout() {
   // Load custom fonts before rendering the app
-  const [fontsLoaded] = useFonts({
+  let [fontsLoaded] = useFonts({
     "Rubik-Bold": require("../assets/fonts/Rubik-Bold.ttf"),
     "Rubik-ExtraBold": require("../assets/fonts/Rubik-ExtraBold.ttf"),
     "Rubik-Light": require("../assets/fonts/Rubik-Light.ttf"),
@@ -23,18 +26,27 @@ export default function RootLayout() {
     }
   }, [fontsLoaded]); // Dependency array ensures effect runs when fontsLoaded changes
 
-  // Return null if the fonts are not yet loaded
-  if (!fontsLoaded) return null;
+  // for testing purposes only: force fontsLoaded to false
+  // fontsLoaded = false; // TODO: REMOVE THIS LINE
+
+  // show loading state if the fonts are not yet loaded
+  if (!fontsLoaded) return (
+    <SafeAreaView className="bg-white flex-1 justify-center items-center">
+      <ActivityIndicator color="#00BF7C" size="large" />
+      <Text className="text-base text-black-300 mt-3">Loading fonts...</Text>
+    </SafeAreaView>
+  );
 
   // Render the navigation stack once fonts are loaded
   return (
-    <>
+    <WeatherProvider>
       <StatusBar style="dark" />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
-    </>
+      {/* <AppNavigator /> */}
+    </WeatherProvider>
   );
 }
