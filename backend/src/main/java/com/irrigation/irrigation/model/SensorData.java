@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.irrigation.irrigation.SensorSimulator.src.sensorsimulator;
+package com.irrigation.irrigation.model;
+
 import java.time.LocalDateTime;
-/**
- *
- * @author polok
- */
+
 public class SensorData {
     private LocalDateTime timestamp;
     private double humidity;
@@ -20,7 +14,7 @@ public class SensorData {
         this.moisture = moisture;
         this.temperature = temperature;
     }
-    
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }

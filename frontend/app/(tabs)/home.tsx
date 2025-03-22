@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
@@ -8,9 +8,33 @@ import SearchBox from "@/components/SearchBox";
 import tw from "tailwind-react-native-classnames";
 import { useWeather } from "@/libs/WeatherProvider";
 import { WeatherData, isDaytime } from "@/utils/weatherUtils";
+import CustomButton from "@/components/CustomButton";
 
 const Home = () => {
   const { weather, loading } = useWeather();
+
+
+  const loadData = async () => {
+    try {
+      // fetch simulation data
+      const response = await fetch("http://192.168.71.178:8080/api/irrigateData", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.ok) {
+        const message = await response.text();
+        Alert.alert("Success", message);
+      } else {
+        const errorMessage = await response.text();
+        Alert.alert("Error", errorMessage);
+      }
+
+    } catch (error) {
+      Alert.alert("Error", `Something went wrong ${error}`);
+      console.error("Error fetching simulation data:", error);
+    }
+  }
 
   return (
     <SafeAreaView className="bg-[#F6F8FA] h-full">
@@ -171,6 +195,13 @@ const Home = () => {
               Irrigate
             </Text>
           </TouchableOpacity>
+
+          {/* Test Simulation Data  button */}
+          <CustomButton
+            title="Test Simulation Data"
+            handlePress={loadData}
+            containerStyles="mt-7"
+          />
         </View>
       </View>
     </SafeAreaView>
