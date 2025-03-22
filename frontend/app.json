@@ -34,9 +34,7 @@
             "backgroundColor": "#040715"
           },
           "resizeMode": "cover",
-          "backgroundColor": "#ffffff",
-          "imageWidth": 200,
-          "enableFullScreenImage_legacy": true
+          "backgroundColor": "#ffffff"
         }
       ],
       [
@@ -60,6 +58,7 @@
       "router": {
         "origin": false
       },
+      "WEATHER_API_KEY" : "c2eff14bb3f1863ea1269334a7fff0b6",
       "eas": {
         "projectId": "cc9b3f9d-0b0c-48d7-a787-bc07254da250"
       }

@@ -1,16 +1,16 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import SearchBox from "@/components/SearchBox";
-import CustomButton from "@/components/CustomButton";
-import tw from 'tailwind-react-native-classnames';
-
+import tw from "tailwind-react-native-classnames";
+import { useWeather } from "@/libs/WeatherProvider";
+import { WeatherData, isDaytime } from "@/utils/weatherUtils";
 
 const Home = () => {
-  const handleIrrigate = () => {};
+  const { weather, loading } = useWeather();
 
   return (
     <SafeAreaView className="bg-[#F6F8FA] h-full">
@@ -50,21 +50,29 @@ const Home = () => {
             colors={["#54C1F6", "#2A9EF0"]} // from your previous stops
             start={{ x: 0, y: 0 }}
             end={{ x: 0.8, y: 1.3 }}
-            style={[tw`rounded-3xl`, { overflow: 'hidden' }]} // using tailwind classes with an extra style
+            style={[tw`rounded-3xl`, { overflow: "hidden" }]} // using tailwind classes with an extra style
             className="flex-row w-full h-[165px] items-center justify-between shadow-2xl rounded-3xl z-10"
           >
             <View>
-              <Image source={images.weather} className="size-56" />
+              {/* Render the day icon if weather data exists */}
+              {/* is valid (i.e., not an error string), */}
+              {/* and the current time falls between sunrise and sunset (indicating daytime); otherwise, render the night icon */}
+              {weather && typeof weather !== "string" && isDaytime(weather.currentTime, weather.sunrise, weather.sunset) ? (
+                <Image source={images.weather} className="size-56" />
+              ) : (
+                <Image source={images.weatherDark} className="size-56" />
+              )}
             </View>
             <View className="flex-col mr-12">
               <Text className="font-rubik-medium text-xl text-white">
                 Today
               </Text>
               <Text className="font-rubik-bold text-3xl text-white">
-                17° / 27°
+              {loading ? "Loading weather data" : `${weather?.temperature ?? "--"}°C`}
               </Text>
-              <Text className="font-rubik text-base text-white">
-                Sunny - Cloudy
+
+              <Text className="font-rubik text-base text-white capitalize">
+                {loading ? "" : weather?.weatherDescription || "--"}
               </Text>
             </View>
           </LinearGradient>
@@ -77,7 +85,10 @@ const Home = () => {
                 resizeMode="contain"
               />
               <Text className="text-sm font-rubik">Humidity</Text>
-              <Text className="text-sm font-rubik">77%</Text>
+              <Text className="text-sm font-rubik">
+                {loading ? "" : weather?.humidity ?? "--"}
+                %
+              </Text>
             </View>
             <View className="items-center justify-center mb-8">
               <Image
@@ -86,7 +97,10 @@ const Home = () => {
                 resizeMode="contain"
               />
               <Text className="text-sm font-rubik">Wind</Text>
-              <Text className="text-sm font-rubik">8km/h</Text>
+              <Text className="text-sm font-rubik">
+                {loading ? "" : weather?.windSpeed ?? "--"}
+                km/h
+              </Text>
             </View>
             <View className="items-center justify-center mb-8">
               <Image
@@ -95,7 +109,10 @@ const Home = () => {
                 resizeMode="contain"
               />
               <Text className="text-sm font-rubik">Precipitation</Text>
-              <Text className="text-sm font-rubik">32%</Text>
+              <Text className="text-sm font-rubik">
+              {loading ? "" : weather?.precipitation ?? "--"}
+                mm
+              </Text>
             </View>
           </View>
         </View>

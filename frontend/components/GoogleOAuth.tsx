@@ -2,10 +2,13 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import GoogleButton from "./GoogleButton";
 import icons from "@/constants/icons";
+import { router } from "expo-router";
 
 const GoogleOAuth = () => {
   
-  const handleGoogleSignIn = async () => {};
+  const handleGoogleSignIn = async () => {
+    router.push("/(tabs)/home");
+  };
 
   return (
     <View>
