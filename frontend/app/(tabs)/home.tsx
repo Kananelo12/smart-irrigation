@@ -1,4 +1,11 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,32 +16,82 @@ import tw from "tailwind-react-native-classnames";
 import { useWeather } from "@/libs/WeatherProvider";
 import { WeatherData, isDaytime } from "@/utils/weatherUtils";
 import CustomButton from "@/components/CustomButton";
+import { SensorData } from "@/types/type";
 
 const Home = () => {
   const { weather, loading } = useWeather();
+  const [sensorData, setSensorData] = useState<SensorData | null>(null);
+  const [loadingSensorData, setLoadingSensorData] = useState(true);
 
-
-  const loadData = async () => {
+  const fetchSensorData = async () => {
     try {
       // fetch simulation data
-      const response = await fetch("http://192.168.71.178:8080/api/irrigateData", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        "http://192.168.236.178:8080/api/irrigateData",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (response.ok) {
-        const message = await response.text();
-        Alert.alert("Success", message);
+        const data = await response.json();
+        setSensorData(data);
+        console.log("\n\nSensor data:", data); // TODO: REMOVE THIS LOG
       } else {
         const errorMessage = await response.text();
         Alert.alert("Error", errorMessage);
       }
-
     } catch (error) {
       Alert.alert("Error", `Something went wrong ${error}`);
       console.error("Error fetching simulation data:", error);
+    } finally {
+      setLoadingSensorData(false);
     }
-  }
+  };
+
+  const dataThreshold = {
+    humidity: 50,
+    moisture: 50,
+    temperature: 50,
+  };
+
+  const findBorderColor = (value: number, threshold: number): string => {
+    // if value is very low as compared to the threshold, return blue
+    if (value < threshold * 0.5) {
+      return "#00bfff";
+    }
+    // if it is very high, return red
+    else if (value > threshold * 1.5) {
+      return "#FF2222";
+    }
+    // if it is in the middle, return green
+    else {
+      return "#00BF7C";
+    }
+  };
+
+  const defaultBorder = "#800080";
+  const humidityBorderColor = sensorData
+    ? findBorderColor(sensorData.humidity || 0, dataThreshold.humidity)
+    : defaultBorder;
+  const mositureBorderColor = sensorData
+    ? findBorderColor(sensorData.moisture || 0, dataThreshold.moisture)
+    : defaultBorder;
+  const tempBorderColor = sensorData
+    ? findBorderColor(sensorData.temperature || 0, dataThreshold.temperature)
+    : defaultBorder;
+  console.log("\n\nhumidityBorderColor", humidityBorderColor);
+  console.log("mositureBorderColor", mositureBorderColor);
+  console.log("tempBorderColor", tempBorderColor);
+
+  useEffect(() => {
+    fetchSensorData();
+
+    // poll for sensor data every 5 seconds
+    const intervalId = setInterval(fetchSensorData, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <SafeAreaView className="bg-[#F6F8FA] h-full">
@@ -81,7 +138,13 @@ const Home = () => {
               {/* Render the day icon if weather data exists */}
               {/* is valid (i.e., not an error string), */}
               {/* and the current time falls between sunrise and sunset (indicating daytime); otherwise, render the night icon */}
-              {weather && typeof weather !== "string" && isDaytime(weather.currentTime, weather.sunrise, weather.sunset) ? (
+              {weather &&
+              typeof weather !== "string" &&
+              isDaytime(
+                weather.currentTime,
+                weather.sunrise,
+                weather.sunset
+              ) ? (
                 <Image source={images.weather} className="size-56" />
               ) : (
                 <Image source={images.weatherDark} className="size-56" />
@@ -92,7 +155,9 @@ const Home = () => {
                 Today
               </Text>
               <Text className="font-rubik-bold text-3xl text-white">
-              {loading ? "Loading weather data" : `${weather?.temperature ?? "--"}°C`}
+                {loading
+                  ? "Loading weather data"
+                  : `${weather?.temperature ?? "--"}°C`}
               </Text>
 
               <Text className="font-rubik text-base text-white capitalize">
@@ -110,8 +175,7 @@ const Home = () => {
               />
               <Text className="text-sm font-rubik">Humidity</Text>
               <Text className="text-sm font-rubik">
-                {loading ? "" : weather?.humidity ?? "--"}
-                %
+                {loading ? "" : weather?.humidity ?? "--"}%
               </Text>
             </View>
             <View className="items-center justify-center mb-8">
@@ -134,7 +198,7 @@ const Home = () => {
               />
               <Text className="text-sm font-rubik">Precipitation</Text>
               <Text className="text-sm font-rubik">
-              {loading ? "" : weather?.precipitation ?? "--"}
+                {loading ? "" : weather?.precipitation ?? "--"}
                 mm
               </Text>
             </View>
@@ -151,39 +215,63 @@ const Home = () => {
           </View>
 
           <View className="flex-row items-center justify-between mt-6 mb-5">
-            <View className="items-center justify-center">
-              <View className="w-16 h-16 border border-[#0F93FF] items-center justify-center rounded-full mb-3">
-                <Text className="font-rubik-medium text-base text-black-400">
-                  77
-                </Text>
-                <Text className="font-rubik text-xs text-[#B5BFC8]">%</Text>
-              </View>
-              <Text className="font-rubik text-sm text-black-400">
-                Humidity
+            {loadingSensorData ? (
+              <Text className="font-rubik text-base text-black-300">
+                Loading sensor data
               </Text>
-            </View>
-            <View className="items-center justify-center">
-              <View className="w-16 h-16 border border-[#FF2222] items-center justify-center rounded-full mb-3">
-                <Text className="font-rubik-medium text-base text-black-400">
-                  23
-                </Text>
-                <Text className="font-rubik text-xs text-[#B5BFC8]">%</Text>
-              </View>
-              <Text className="font-rubik text-sm text-black-400">
-                Soil Moisture
+            ) : sensorData ? (
+              <>
+                <View className="items-center justify-center">
+                  <View
+                    className={`w-16 h-16 border-2 items-center justify-center rounded-full mb-3`}
+                    style={{ borderColor: humidityBorderColor}}
+                  >
+                    <Text className="font-rubik-medium text-base text-black-400">
+                      {Math.round(sensorData.humidity)}
+                    </Text>
+                    <Text className="font-rubik text-xs text-[#B5BFC8]">%</Text>
+                  </View>
+                  <Text className="font-rubik text-sm text-black-400">
+                    Humidity
+                  </Text>
+                </View>
+                <View className="items-center justify-center">
+                  <View
+                    className={`w-16 h-16 border-2 items-center justify-center rounded-full mb-3`}
+                    style={{ borderColor: mositureBorderColor}}
+                  >
+                    <Text className="font-rubik-medium text-base text-black-400">
+                      {Math.round(sensorData.moisture)}
+                    </Text>
+                    <Text className="font-rubik text-xs text-[#B5BFC8]">%</Text>
+                  </View>
+                  <Text className="font-rubik text-sm text-black-400">
+                    Soil Moisture
+                  </Text>
+                </View>
+                <View className="items-center justify-center">
+                  <View
+                    className={`w-16 h-16 border-2 items-center justify-center rounded-full mb-3`}
+                    style={{ borderColor: tempBorderColor }}
+                  >
+                    <Text className="font-rubik-medium text-base text-black-400">
+                      {Math.round(sensorData.temperature)}
+                    </Text>
+                    <Text className="font-rubik text-xs text-[#B5BFC8]">
+                      °C
+                    </Text>
+                  </View>
+                  <Text className="font-rubik text-sm text-black-400">
+                    Temperature
+                  </Text>
+                </View>
+              </>
+            ) : (
+              // render an illustration if no sensor data is available
+              <Text className="font-rubik text-base text-black-300">
+                No sensor data available
               </Text>
-            </View>
-            <View className="items-center justify-center">
-              <View className="w-16 h-16 border border-primary-300 items-center justify-center rounded-full mb-3">
-                <Text className="font-rubik-medium text-base text-black-400">
-                  77
-                </Text>
-                <Text className="font-rubik text-xs text-[#B5BFC8]">°C</Text>
-              </View>
-              <Text className="font-rubik text-sm text-black-400">
-                Temperature
-              </Text>
-            </View>
+            )}
           </View>
 
           {/* irigate button */}
@@ -195,13 +283,6 @@ const Home = () => {
               Irrigate
             </Text>
           </TouchableOpacity>
-
-          {/* Test Simulation Data  button */}
-          <CustomButton
-            title="Test Simulation Data"
-            handlePress={loadData}
-            containerStyles="mt-7"
-          />
         </View>
       </View>
     </SafeAreaView>

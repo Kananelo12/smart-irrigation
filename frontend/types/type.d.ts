@@ -30,3 +30,10 @@ declare interface WeatherData {
     sunrise: number;
     sunset: number;
 }
+
+declare interface SensorData {
+    timestamp: string;
+    humidity: number;
+    moisture: number;
+    temperature: number;
+  }
