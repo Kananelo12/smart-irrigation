@@ -20,15 +20,15 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
-    if (!form.name || !form.email || !form.password) {
-      Alert.alert("Error", "Please fill in all the fields!");
-      return;
-    }
+    // if (!form.name || !form.email || !form.password) {
+    //   Alert.alert("Error", "Please fill in all the fields!");
+    //   return;
+    // }
     try {
       console.log(
         `\nFull names: ${form.name}\nUsername: ${form.email}\nPassword: ${form.password}`
       );
-      const response = await fetch("http://192.168.113.178:8080/api/register", {
+      const response = await fetch("http://192.168.131.178:8080/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,17 +1,19 @@
 package com.irrigation.irrigation.dto;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class RegisterRequest {
-    @NotNull
+    // @NotBlank(message = "Name is required")
+    @NotBlank(message = "Name is required")
     private String name;
 
-    @NotNull
+    @NotEmpty(message = "Username is required")
     @Size(min = 3, message = "Username must be at least 3 characters long")
     private String username;
 
-    @NotNull
+    @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 

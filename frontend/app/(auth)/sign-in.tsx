@@ -28,7 +28,7 @@ const SignIn = () => {
     // TODO: add validation for password length and security
     try {
       console.log(`\nUsername: ${form.email}\nPassword: ${form.password}`);
-      const response = await fetch(`http://192.168.113.178:8080/api/login`, {
+      const response = await fetch(`http://192.168.131.178:8080/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

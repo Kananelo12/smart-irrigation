@@ -4,14 +4,18 @@ import com.irrigation.irrigation.dto.LoginRequest;
 import com.irrigation.irrigation.dto.RegisterRequest;
 import com.irrigation.irrigation.model.User;
 import com.irrigation.irrigation.repository.UserRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
+@Validated
 public class AuthController {
 
     private final UserRepository userRepository;
