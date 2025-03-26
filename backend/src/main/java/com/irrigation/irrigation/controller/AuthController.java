@@ -42,7 +42,7 @@ public class AuthController {
         // create new user entity
         User user = new User();
         user.setName(registerRequest.getName());
-        user.setUsername(registerRequest.getUsername());
+        user.setEmail(registerRequest.getUsername());
         user.setPassword(registerRequest.getPassword());
 
         // save the user

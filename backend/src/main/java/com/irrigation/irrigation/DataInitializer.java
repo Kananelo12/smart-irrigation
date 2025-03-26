@@ -19,7 +19,8 @@ public class DataInitializer implements CommandLineRunner {
         // Populate database with a default user if none exist
         if (userRepository.count() == 0) {
             User user = new User();
-            user.setUsername("testuse");
+            user.setName("test");
+            user.setEmail("test@gmail.com");
             user.setPassword("testpass1"); // Remember: In production, never store plain text passwords!
             userRepository.save(user);
         }
