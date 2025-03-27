@@ -1,4 +1,3 @@
-// TODO: not necessary
 package com.irrigation.irrigation.dto;
 
 import com.irrigation.irrigation.model.SensorData;
