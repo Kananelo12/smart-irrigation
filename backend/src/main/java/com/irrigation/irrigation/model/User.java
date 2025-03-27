@@ -1,6 +1,7 @@
 package com.irrigation.irrigation.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +18,7 @@ public class User {
     private String email; // Email should be lowercase
 
     @Column(nullable = false, unique = true)
+    @Pattern(regexp="^\\+266 ?\\d{8}$", message="Invalid phone number format. Please use '+266 56565406' or '+26656565406'.")
     private String phoneNumber; // phone number of the user
 
     @ManyToOne
