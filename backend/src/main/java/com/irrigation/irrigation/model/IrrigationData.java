@@ -54,7 +54,7 @@ public class IrrigationData {
         return moisture;
     }
 
-    public void setmoisture(double moisture) {
+    public void setMoisture(double moisture) {
         this.moisture = moisture;
     }
 

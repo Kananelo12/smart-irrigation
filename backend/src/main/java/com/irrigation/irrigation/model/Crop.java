@@ -25,22 +25,17 @@ public class Crop {
     @Column(nullable = false)
     private double moistureRequirement;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user; // Establishing relationship with User
-
     // Constructors
     public Crop() {
     }
 
-    public Crop(Long id, String name, double waterRequirement, double temperatureRequirement, double humidityRequirement, double moistureRequirement, User user) {
+    public Crop(Long id, String name, double waterRequirement, double temperatureRequirement, double humidityRequirement, double moistureRequirement) {
         this.id = id;
         this.name = name;
         this.waterRequirement = waterRequirement;
         this.temperatureRequirement = temperatureRequirement;
         this.humidityRequirement = humidityRequirement;
         this.moistureRequirement = moistureRequirement;
-        this.user = user;
     }
 
     // Getters and Setters
@@ -84,20 +79,12 @@ public class Crop {
         this.humidityRequirement = humidityRequirement;
     }
 
-    public double getmoistureRequirement() {
+    public double getMoistureRequirement() {
         return moistureRequirement;
     }
 
-    public void setmoistureRequirement(double moistureRequirement) {
+    public void setMoistureRequirement(double moistureRequirement) {
         this.moistureRequirement = moistureRequirement;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
 

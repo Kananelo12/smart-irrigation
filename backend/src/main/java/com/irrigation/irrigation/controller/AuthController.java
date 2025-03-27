@@ -26,7 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        return userRepository.findByUsername(loginRequest.getUsername())
+        return userRepository.findByEmail(loginRequest.getEmail())
             .filter(user -> user.getPassword().equals(loginRequest.getPassword()))
             .map(user -> ResponseEntity.ok("Login successful!"))
             .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials"));
@@ -35,14 +35,14 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
         // check if user already exists
-        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
-            return new ResponseEntity<>("Username already taken! Try again.", HttpStatus.BAD_REQUEST);
+        if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            return new ResponseEntity<>("Email already taken! Try again.", HttpStatus.BAD_REQUEST);
         }
 
         // create new user entity
         User user = new User();
         user.setName(registerRequest.getName());
-        user.setEmail(registerRequest.getUsername());
+        user.setEmail(registerRequest.getEmail());
         user.setPassword(registerRequest.getPassword());
 
         // save the user
