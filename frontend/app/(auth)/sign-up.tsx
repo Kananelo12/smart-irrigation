@@ -11,6 +11,8 @@ const SignUp = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    roleId: "",
+    phoneNo: "",
     password: "",
   });
 
@@ -20,15 +22,15 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
-    // if (!form.name || !form.email || !form.password) {
-    //   Alert.alert("Error", "Please fill in all the fields!");
-    //   return;
-    // }
+    if (!form.name || !form.email || !form.roleId || !form.phoneNo || !form.password) {
+      Alert.alert("Error", "Please fill in all the fields!");
+      return;
+    }
     try {
       console.log(
         `\nFull names: ${form.name}\nUsername: ${form.email}\nPassword: ${form.password}`
       );
-      const response = await fetch("http://192.168.131.178:8080/api/register", {
+      const response = await fetch("http://192.168.248.178:8080/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -87,6 +89,21 @@ const SignUp = () => {
             icon={icons.email}
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
+          />
+          <InputField
+            label="Role Type"
+            placeholder="Select your role"
+            icon={icons.email}
+            value={form.roleId}
+            onChangeText={(value) => setForm({ ...form, roleId: value })}
+          />
+          <InputField
+            label="Phone Number"
+            placeholder="Enter your phone number"
+            keyboardType="phone-pad"
+            icon={icons.email}
+            value={form.phoneNo}
+            onChangeText={(value) => setForm({ ...form, phoneNo: value })}
           />
           <InputField
             label="Password"
