@@ -20,6 +20,30 @@ export const farms = [
     image: images.farmerPic,
   },
 ];
+// Crops Data
+export const crops = [
+  {
+    id: "1",
+    name: "Cabbage",
+    landUsed: "12 meters",
+    period: "Feb - Jun",
+    icon: require("../assets/icons/crop.png"),
+  },
+  {
+    id: "2",
+    name: "Tomatoes",
+    landUsed: "100 meters",
+    period: "Feb - Jun",
+    icon: require("../assets/icons/crop.png"),
+  },
+  {
+    id: "3",
+    name: "Spinach",
+    landUsed: "20 meters",
+    period: "Feb - Jun",
+      icon: require("../assets/icons/crop.png"),
+  },
+];
 
 export const notifications = [
   {
