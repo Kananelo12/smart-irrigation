@@ -27,7 +27,7 @@ const Home = () => {
     try {
       // fetch simulation data
       const response = await fetch(
-        "http://192.168.30.178:8080/api/irrigateData",
+        "http://172.25.28.95:8080/api/irrigateData",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

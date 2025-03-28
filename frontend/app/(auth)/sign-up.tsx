@@ -29,7 +29,7 @@ const SignUp = () => {
       console.log(
         `\nFull names: ${form.name}\Email: ${form.email}\nPhone Number: ${form.phoneNumber}\nPassword: ${form.password}`
       );
-      const response = await fetch("http://192.168.30.178:8080/api/register", {
+      const response = await fetch("http://172.25.28.95:8080/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

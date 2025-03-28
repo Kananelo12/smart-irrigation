@@ -1,5 +1,5 @@
 import { Link, Redirect, router } from "expo-router";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import CustomButton from "@/components/CustomButton";
@@ -11,12 +11,20 @@ export default function Index() {
 
   const handlePress = () => {
     router.push("/sign-in");
-
-
   };
+
+  const testMode = () => {
+    Alert.alert("Test Mode", "Redirecting to home screen");
+    router.push("/(tabs)/home");
+  };
+
   const handleSkip = () => {
-    router.push("/home");
+    Alert.alert("Message", "Navigate to authentication screens?", [
+      {text: "Cancel", style: "cancel"},
+      {text: "Yes", onPress: testMode }
+    ])
   };
+  handleSkip();
 
   return (
     <ScrollView className="flex-1" contentContainerStyle={{ height: "100%" }}>
@@ -37,13 +45,6 @@ export default function Index() {
               <Text className="font-rubik-semibold text-2xl text-center mb-10">
                 The Future of Smart Farming with{" "}
                 <Text className="text-primary-300">AgriSync</Text>
-                {/* Skip Button */}
-                <Text
-                    className="mt-4 text-gray-500 underline text-md"
-                    onPress={handleSkip}
-                >
-                  Skip
-                </Text>
               </Text>
               <Text className="font-rubik text-lg text-center max-w-96 mb-10">
                 Optimize irrigation, maximize growth, and save water
