@@ -28,6 +28,8 @@ export const crops = [
     landUsed: "12 meters",
     period: "Feb - Jun",
     icon: require("../assets/icons/crop.png"),
+    deleteIcon: icons.deleteIcon,
+
   },
   {
     id: "2",
@@ -35,13 +37,15 @@ export const crops = [
     landUsed: "100 meters",
     period: "Feb - Jun",
     icon: require("../assets/icons/crop.png"),
+    deleteIcon: icons.deleteIcon,
   },
   {
     id: "3",
     name: "Spinach",
     landUsed: "20 meters",
     period: "Feb - Jun",
-      icon: require("../assets/icons/crop.png"),
+    icon: require("../assets/icons/crop.png"),
+    deleteIcon: icons.deleteIcon,
   },
 ];
 
