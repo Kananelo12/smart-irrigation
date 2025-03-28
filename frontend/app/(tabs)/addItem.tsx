@@ -46,7 +46,7 @@ const AddItem = () => {
 
         <View className=" px-3">
           {/* Input: Crop Name */}
-          <View className="mb-6 mt-10">
+          <ThemedView className="mb-6 mt-10">
             <Text className="font-rubik text-base mb-2">Select Crop</Text>
             <View className="border border-gray-300 rounded-md bg-gray-50">
               <Picker
@@ -63,7 +63,7 @@ const AddItem = () => {
                 ))}
               </Picker>
             </View>
-          </View>
+          </ThemedView>
 
           {/* Input: Expected Temperature */}
           <View className="mb-6">
