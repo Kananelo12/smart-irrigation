@@ -11,8 +11,7 @@ const SignUp = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    roleId: "",
-    phoneNo: "",
+    phoneNumber: "",
     password: "",
   });
 
@@ -22,20 +21,21 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
-    if (!form.name || !form.email || !form.roleId || !form.phoneNo || !form.password) {
+    if (!form.name || !form.email || !form.phoneNumber || !form.password) {
       Alert.alert("Error", "Please fill in all the fields!");
       return;
     }
     try {
       console.log(
-        `\nFull names: ${form.name}\nUsername: ${form.email}\nPassword: ${form.password}`
+        `\nFull names: ${form.name}\Email: ${form.email}\nPhone Number: ${form.phoneNumber}\nPassword: ${form.password}`
       );
-      const response = await fetch("http://192.168.248.178:8080/api/register", {
+      const response = await fetch("http://192.168.30.178:8080/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: form.name,
-          username: form.email, // backend expects key of username, not 'email'
+          email: form.email,
+          phoneNumber: form.phoneNumber,
           password: form.password,
         }),
       });
@@ -78,32 +78,25 @@ const SignUp = () => {
         <View className="p-5">
           <InputField
             label="Name"
-            placeholder="Enter your name"
+            placeholder="Bokang Joel"
             icon={icons.person}
             value={form.name}
             onChangeText={(value) => setForm({ ...form, name: value })}
           />
           <InputField
             label="Email"
-            placeholder="Enter your email"
+            placeholder="joel@gmail.com"
             icon={icons.email}
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
           />
           <InputField
-            label="Role Type"
-            placeholder="Select your role"
-            icon={icons.email}
-            value={form.roleId}
-            onChangeText={(value) => setForm({ ...form, roleId: value })}
-          />
-          <InputField
             label="Phone Number"
-            placeholder="Enter your phone number"
-            keyboardType="phone-pad"
+            placeholder="+266 56565406"
+            // keyboardType="phone-pad"
             icon={icons.email}
-            value={form.phoneNo}
-            onChangeText={(value) => setForm({ ...form, phoneNo: value })}
+            value={form.phoneNumber}
+            onChangeText={(value) => setForm({ ...form, phoneNumber: value })}
           />
           <InputField
             label="Password"

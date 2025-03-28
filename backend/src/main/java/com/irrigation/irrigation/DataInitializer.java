@@ -20,6 +20,22 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        // Populate the role table with default roles if none exist
+        if (roleRepository.count() == 0) {
+            String[] roles = { "admin", "farmer" };
+            for (String roleName : roles) {
+                Role role = new Role();
+                role.setName(roleName);
+                roleRepository.save(role);
+            }
+        }
+
+        // String rawPassword = "admin@123";
+        // String hashedPassword = passwordEncoder.encode(rawPassword);
+        // boolean matches = passwordEncoder.matches(rawPassword, hashedPassword);
+        // System.out.println("Password matches: " + matches);
+
         // Populate database with a default user if none exist
         if (userRepository.count() == 0) {
             User user = new User();
@@ -35,7 +51,8 @@ public class DataInitializer implements CommandLineRunner {
             user.setEmail("admin@gmail.com");
             user.setPhoneNumber("+26656768954");
             user.setRole(role);
-            user.setPassword("testpass1"); // Remember: In production, never store plain text passwords!
+            // Hash the password before saving
+            user.setPassword("admin@123");
             userRepository.save(user);
         }
     }

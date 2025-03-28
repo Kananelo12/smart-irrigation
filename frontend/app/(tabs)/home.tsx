@@ -27,7 +27,7 @@ const Home = () => {
     try {
       // fetch simulation data
       const response = await fetch(
-        "http://192.168.248.178:8080/api/irrigateData",
+        "http://192.168.30.178:8080/api/irrigateData",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -89,7 +89,7 @@ const Home = () => {
     fetchSensorData();
 
     // poll for sensor data every 5 seconds
-    const intervalId = setInterval(fetchSensorData, 5000);
+    const intervalId = setInterval(fetchSensorData, 1800000);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -122,7 +122,7 @@ const Home = () => {
         </View>
 
         {/* search box component */}
-        <SearchBox />
+        <SearchBox placeholder="Search for crop stats" />
 
         {/* Weather information */}
         <View className="w-full flex flex-col mt-7 relative mb-36">

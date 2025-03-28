@@ -13,6 +13,9 @@ public class RegisterRequest {
     @Size(min = 3, message = "Email must be at least 3 characters long")
     private String email;
 
+    @NotEmpty(message = "Phone number is required")
+    private String phoneNumber;
+
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
@@ -29,6 +32,12 @@ public class RegisterRequest {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
     public String getPassword() {
         return password;
