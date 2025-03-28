@@ -25,25 +25,25 @@ const CropCard = ({ item, handleDelete }: { item: any; handleDelete: (id: string
     const navigation = useNavigation();
 
     return (
-        <ThemedView className="px-3 py-1">
-            <ThemedView className="w-full bg-white flex-row items-start justify-between shadow-lg rounded-lg py-5 px-3 mt-5">
+        <View className="px-3 py-1">
+            <View className="w-full bg-white flex-row items-start justify-between shadow-lg rounded-lg py-5 px-3 mt-5">
                 {/* Crop Icon */}
                 <View className="items-center justify-center bg-primary-200 w-[50px] h-[50px] rounded-full">
                     <Image source={item.icon} className="w-8 h-8" />
                 </View>
 
                 {/* Crop Details */}
-                <ThemedView className="flex-1 ml-3">
-                    <ThemedText className="font-rubik-medium text-lg mb-1">{item.name}</ThemedText>
-                    <ThemedText className="font-rubik text-base">
+                <View className="flex-1 ml-3">
+                    <Text className="font-rubik-medium text-lg mb-1">{item.name}</Text>
+                    <Text className="font-rubik text-base">
                         {item.landUsed} of land used ({item.period})
-                    </ThemedText>
-                </ThemedView>
+                    </Text>
+                </View>
 
                 {/* View Details Button */}
                 <TouchableOpacity
                     className="bg-primary-300 px-4 py-2 rounded-lg mr-2"
-                    onPress={() => navigation.navigate("CropDetails", { cropId: item.id })}
+                    // onPress={() => navigation.navigate("CropDetails", { cropId: item.id })}
                 >
                     <Text className="text-white">View Details</Text>
                 </TouchableOpacity>
@@ -52,8 +52,8 @@ const CropCard = ({ item, handleDelete }: { item: any; handleDelete: (id: string
                 <TouchableOpacity onPress={() => handleDelete(item.id)}>
                     <Image source={item.deleteIcon} className="w-6 h-6" />
                 </TouchableOpacity>
-            </ThemedView>
-        </ThemedView>
+            </View>
+        </View>
     );
 };
 
