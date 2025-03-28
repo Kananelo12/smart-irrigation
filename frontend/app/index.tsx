@@ -11,6 +11,11 @@ export default function Index() {
 
   const handlePress = () => {
     router.push("/sign-in");
+
+
+  };
+  const handleSkip = () => {
+    router.push("/home");
   };
 
   return (
@@ -25,12 +30,20 @@ export default function Index() {
             />
           </View>
         </View>
+
         <View className="w-full h-[50%] items-center justify-center">
           <View className="bg-white w-[500px] min-h-screen rounded-t-[160px] relative top-44 items-center justify-center">
             <View className="max-w-[26rem] h-full items-center py-20">
               <Text className="font-rubik-semibold text-2xl text-center mb-10">
                 The Future of Smart Farming with{" "}
                 <Text className="text-primary-300">AgriSync</Text>
+                {/* Skip Button */}
+                <Text
+                    className="mt-4 text-gray-500 underline text-md"
+                    onPress={handleSkip}
+                >
+                  Skip
+                </Text>
               </Text>
               <Text className="font-rubik text-lg text-center max-w-96 mb-10">
                 Optimize irrigation, maximize growth, and save water

@@ -29,6 +29,7 @@ import dataUsage from "@/assets/icons/data-usage.png";
 import policyOutline from "@/assets/icons/policy-line.png";
 import stackLine from "@/assets/icons/build-line.png";
 import crop from "@/assets/icons/crop.png";
+import deleteIcon from "@/assets/icons/deleteIcon.png";
 
 export default {
   backArrow,
@@ -38,6 +39,7 @@ export default {
   clarityEye,
   crop,
   darkMode,
+  deleteIcon,
   moonLine,
   email,
   filter,
