@@ -1,16 +1,16 @@
 package com.irrigation.irrigation.controller;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.irrigation.irrigation.dto.CropRequest;
 import com.irrigation.irrigation.model.Crop;
 import com.irrigation.irrigation.repository.CropRepository;
 import com.irrigation.irrigation.service.CropService;
 
-import jakarta.validation.Valid;
 import java.util.Optional;
 import java.util.List;
 
@@ -21,8 +21,6 @@ public class CropController {
     private final CropService cropService;
 
     private final CropRepository cropRepository;
-
-    @Autowired
     public CropController(CropRepository cropRepository, CropService cropService) {
         this.cropRepository = cropRepository;
         this.cropService = cropService;
@@ -71,6 +69,11 @@ public class CropController {
     @DeleteMapping("/deleteCrop/{id}")
     public ResponseEntity<String> deleteCrop(@PathVariable Long id) {
         String response = cropService.deleteCrop(id);
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/importExcel")
+    public ResponseEntity<String> importExcel(@RequestParam("File") MultipartFile file) {
+        String response = cropService.importDataFromExcel(file);
         return ResponseEntity.ok(response);
     }
 }
