@@ -5,7 +5,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import icons from "@/constants/icons";
 import { Picker } from "@react-native-picker/picker";
-import {ThemedView} from "@/components/ThemedView";
 import {router} from "expo-router";
 
 const AddItem = () => {
@@ -46,7 +45,7 @@ const AddItem = () => {
 
         <View className=" px-3">
           {/* Input: Crop Name */}
-          <ThemedView className="mb-6 mt-10">
+          <View className="mb-6 mt-10">
             <Text className="font-rubik text-base mb-2">Select Crop</Text>
             <View className="border border-gray-300 rounded-md bg-gray-50">
               <Picker
@@ -63,7 +62,7 @@ const AddItem = () => {
                 ))}
               </Picker>
             </View>
-          </ThemedView>
+          </View>
 
           {/* Input: Expected Temperature */}
           <View className="mb-6">

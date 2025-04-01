@@ -9,8 +9,6 @@ import {
     View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { useNavigation } from "@react-navigation/native";
 import icons from "@/constants/icons";
 import { crops } from "@/constants/data";
@@ -25,25 +23,25 @@ const CropCard = ({ item, handleDelete }: { item: any; handleDelete: (id: string
     const navigation = useNavigation();
 
     return (
-        <ThemedView className="px-3 py-1">
-            <ThemedView className="w-full bg-white flex-row items-start justify-between shadow-lg rounded-lg py-5 px-3 mt-5">
+        <View className="px-3 py-1">
+            <View className="w-full bg-white flex-row items-start justify-between shadow-lg rounded-lg py-5 px-3 mt-5">
                 {/* Crop Icon */}
                 <View className="items-center justify-center bg-primary-200 w-[50px] h-[50px] rounded-full">
                     <Image source={item.icon} className="w-8 h-8" />
                 </View>
 
                 {/* Crop Details */}
-                <ThemedView className="flex-1 ml-3">
-                    <ThemedText className="font-rubik-medium text-lg mb-1">{item.name}</ThemedText>
-                    <ThemedText className="font-rubik text-base">
+                <View className="flex-1 ml-3">
+                    <Text className="font-rubik-medium text-lg mb-1">{item.name}</Text>
+                    <Text className="font-rubik text-base">
                         {item.landUsed} of land used ({item.period})
-                    </ThemedText>
-                </ThemedView>
+                    </Text>
+                </View>
 
                 {/* View Details Button */}
                 <TouchableOpacity
                     className="bg-primary-300 px-4 py-2 rounded-lg mr-2"
-                    onPress={() => navigation.navigate("CropDetails", { cropId: item.id })}
+                    onPress={() => router.push("/(tabs)/addItem")}
                 >
                     <Text className="text-white">View Details</Text>
                 </TouchableOpacity>
@@ -52,8 +50,8 @@ const CropCard = ({ item, handleDelete }: { item: any; handleDelete: (id: string
                 <TouchableOpacity onPress={() => handleDelete(item.id)}>
                     <Image source={item.deleteIcon} className="w-6 h-6" />
                 </TouchableOpacity>
-            </ThemedView>
-        </ThemedView>
+            </View>
+        </View>
     );
 };
 
@@ -86,23 +84,20 @@ const Statistics = () => {
             </View>
 
             {/* Search Bar */}
-            <SearchBox
-
-
-            />
+            <SearchBox placeholder="Search for crop stats" />
 
             {/* Toggle Buttons */}
-            <ThemedView className="flex-row justify-between mt-5 px-4">
+            <View className="flex-row justify-between mt-5 px-4">
                 <TouchableOpacity className="border border-primary-300 px-4 py-2 rounded-lg">
-                    <ThemedText>All Crops</ThemedText>
+                    <Text>All Crops</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     className="border border-gray-300 px-4 py-2 rounded-lg"
                     onPress={() => router.push("/addItem")}
                 >
-                    <ThemedText className="text-gray-500">Add Crops</ThemedText>
+                    <Text className="text-gray-500">Add Crops</Text>
                 </TouchableOpacity>
-            </ThemedView>
+            </View>
 
             {/* Crop List */}
             <FlatList
@@ -113,19 +108,19 @@ const Statistics = () => {
                 )}
                 className="mt-5"
                 ListEmptyComponent={
-                    <ThemedText className="text-gray-500 text-center mt-5">
+                    <Text className="text-gray-500 text-center mt-5">
                         No crops found
-                    </ThemedText>
+                    </Text>
                 }
             />
 
             {/* Bottom Section with Refresh Button */}
-            <ThemedView className="flex-row justify-between px-4 mt-10">
-                <ThemedText className="text-gray-500">All crops</ThemedText>
+            <View className="flex-row justify-between px-4 mt-10">
+                <Text className="text-gray-500">All crops</Text>
                 <TouchableOpacity onPress={() => setSearchText("")} className="p-2">
-                    <ThemedText className="text-[#3b82f6]">Refresh</ThemedText>
+                    <Text className="text-[#3b82f6]">Refresh</Text>
                 </TouchableOpacity>
-            </ThemedView>
+            </View>
         </SafeAreaView>
     );
 };

@@ -1,7 +1,9 @@
 package com.irrigation.irrigation;
 
 import com.irrigation.irrigation.model.User;
+import com.irrigation.irrigation.model.Crop;
 import com.irrigation.irrigation.repository.UserRepository;
+import com.irrigation.irrigation.repository.CropRepository;
 import com.irrigation.irrigation.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,12 @@ public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final CropRepository cropRepository;
 
-    public DataInitializer(UserRepository userRepository, RoleRepository roleRepository) {
+    public DataInitializer(UserRepository userRepository, RoleRepository roleRepository, CropRepository cropRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.cropRepository = cropRepository;
     }
 
     @Override
@@ -28,6 +32,19 @@ public class DataInitializer implements CommandLineRunner {
                 Role role = new Role();
                 role.setName(roleName);
                 roleRepository.save(role);
+            }
+        }
+        // Populate the crop table with default roles if none exist
+        if (cropRepository.count() == 0) {
+            String[] crops = { "Maize", "Wheat", "Rice" };
+            for (String cropName : crops) {
+                Crop crop = new Crop();
+                crop.setName(cropName);
+                crop.setWaterRequirement(1.0); // Example value
+                crop.setTemperatureRequirement(25.0); // Example value
+                crop.setHumidityRequirement(60.0); // Example value
+                crop.setMoistureRequirement(30.0); // Example value
+                cropRepository.save(crop);
             }
         }
 
