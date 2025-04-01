@@ -92,11 +92,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>8.0.2.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>com.twilio.sdk</groupId>
-			<artifactId>twilio</artifactId>
-			<version>9.0.0</version>
-		</dependency>
+		
 		<!-- Optional: To use the Jakarta Validation annotations with Spring Boot -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
 		<dependency>
