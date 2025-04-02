@@ -8,6 +8,7 @@ import com.irrigation.irrigation.repository.RoleRepository;
 import com.irrigation.irrigation.repository.UserRepository;
 
 import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         return userRepository.findByEmail(loginRequest.getEmail())
                 .filter(user -> user.getPassword().equals(loginRequest.getPassword()))
-                .map(user -> ResponseEntity.ok("Login successful!"))
+                .map(user -> {
+                    // Store the user object in the session
+                    session.setAttribute("user", user);
+                    return ResponseEntity.ok("Login successful!");
+                })
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials"));
     }
 

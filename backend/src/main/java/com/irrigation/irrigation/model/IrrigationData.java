@@ -19,6 +19,10 @@ public class IrrigationData {
     private double moisture;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "crop_id", referencedColumnName = "id", nullable = false)
     private Crop crop; // Establishing relationship with Crop
 
@@ -64,6 +68,14 @@ public class IrrigationData {
 
     public void setHumidity(double humidity) {
         this.humidity = humidity;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Crop getCrop() {
