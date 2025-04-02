@@ -48,6 +48,7 @@ public class CropController {
         // return success response
         return new ResponseEntity<>("Crop successfully added!", HttpStatus.CREATED);
     }
+    
     @GetMapping("/getAllCrops")
     public ResponseEntity<?> getAllCrops() {
         try {
