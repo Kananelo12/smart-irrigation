@@ -61,6 +61,10 @@ const Settings = () => {
             <Image source={icons.stackLine} className="w-7 h-7" />
             <Text className="font-rubik text-lg mt-1">Version 1.0.0 Build 123</Text>
           </View>
+          <View className="flex-row items-center gap-3">
+            <Image source={icons.stackLine} className="w-7 h-7" tintColor="#00BF7C"/>
+            <Text className="font-rubik text-lg text-primary-300 mt-1" onPress={() => router.push("/(root)/import-file")}>Import Crop</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
