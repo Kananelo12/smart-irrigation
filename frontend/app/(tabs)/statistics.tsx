@@ -88,11 +88,11 @@ const Statistics = () => {
 
             {/* Toggle Buttons */}
             <View className="flex-row justify-between mt-5 px-4">
-                <TouchableOpacity className="border border-primary-300 px-4 py-2 rounded-lg">
-                    <Text>All Crops</Text>
-                </TouchableOpacity>
+                <View className=" py-2 rounded-lg">
+                    <Text className="font-rubik text-lg text-black-300">All Crops</Text>
+                </View>
                 <TouchableOpacity
-                    className="border border-gray-300 px-4 py-2 rounded-lg"
+                    className="border border-gray-300 px-4 py-2 rounded-md"
                     onPress={() => router.push("/addItem")}
                 >
                     <Text className="text-gray-500">Add Crops</Text>

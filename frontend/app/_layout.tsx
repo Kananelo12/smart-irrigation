@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ActivityIndicator, Text } from "react-native";
 import { WeatherProvider } from "@/libs/WeatherProvider";
+import React from "react";
 
 export default function RootLayout() {
   // Load custom fonts before rendering the app
@@ -45,6 +46,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(root)" options={{ headerShown: false }} />
       </Stack>
       {/* <AppNavigator /> */}
     </WeatherProvider>
