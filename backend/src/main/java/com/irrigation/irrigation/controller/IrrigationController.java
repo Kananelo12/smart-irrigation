@@ -85,4 +85,37 @@ public class IrrigationController {
         return new ResponseEntity<>("Sensor data stored successfully!", HttpStatus.CREATED);
     }
      
+    @GetMapping("/irrigate")
+    public ResponseEntity<?> irrigate(HttpSession session) {
+        // Retrieve the logged-in user from session
+        User user = (User) session.getAttribute("loggedInUser");
+
+        if (user == null) {
+            return new ResponseEntity<>("User not logged in!", HttpStatus.UNAUTHORIZED);
+        }
+
+        // Fetch the most recent irrigation data for the logged-in user
+        IrrigationData latestIrrigationData = irrigationDataRepository
+            .findTopByUserOrderByTimestampDesc(user);
+
+        if (latestIrrigationData == null) {
+            return new ResponseEntity<>("No irrigation data found for this user!", HttpStatus.NOT_FOUND);
+        }
+
+        IrrigationData irrigationData = latestIrrigationData;
+
+        // Check the moisture level or other parameters (You can add more conditions)
+        double moisture = irrigationData.getMoisture();
+
+        // Example threshold for irrigation
+        double moistureThreshold = 30.0; // Moisture below 30% means irrigation needed
+
+        // Decision making
+        if (moisture < moistureThreshold) {
+            // Irrigate the plant (you can add any additional logic here)
+            return new ResponseEntity<>("Irrigation needed. Irrigating the plant.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("No irrigation needed. Moisture level is sufficient.", HttpStatus.OK);
+        }
+    }
 }
