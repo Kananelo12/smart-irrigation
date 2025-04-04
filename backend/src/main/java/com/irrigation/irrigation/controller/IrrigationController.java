@@ -33,39 +33,53 @@ public class IrrigationController {
         this.cropRepository = cropRepository;
     }
 
-    @GetMapping("/irrigateData")
-    public ResponseEntity<SensorData> simulateSensorData() {
-        // Generate simulated sensor data
-        SensorData sensorData = SensorSimulator.generateSensorData();
-        return ResponseEntity.ok(sensorData);
-    }
+    // @GetMapping("/irrigateData")
+    // public ResponseEntity<IrrigationData> getLatestIrrigationData(@RequestParam Long cropId) {
+    //     // Retrieve the crop from the database using the provided crop ID
+    //     Optional<Crop> cropOptional = cropRepository.findById(cropId);
+
+    //     if (cropOptional.isEmpty()) {
+    //         return new ResponseEntity<>("Crop not found!", HttpStatus.BAD_REQUEST);
+    //     }
+
+    //     Crop crop = cropOptional.get();
+
+    //     // Fetch the most recent irrigation data for the specified crop
+    //     IrrigationData latestIrrigationData = irrigationDataRepository
+    //             .findTopByCropOrderByTimestampDesc(crop);
+
+    //     if (latestIrrigationData == null) {
+    //         return new ResponseEntity<>("No irrigation data found for this crop!", HttpStatus.NOT_FOUND);
+    //     }
+
+    //     return ResponseEntity.ok(latestIrrigationData);
+    // }
     @PostMapping("/storeSensorData")
-    public ResponseEntity<String> storeSimulatedData(@RequestParam Long cropId, HttpSession session) {
+    public ResponseEntity<String> storeSimulatedData(HttpSession session) {
         // Retrieve the logged-in user from session
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("loggedInUser");
 
         if (user == null) {
             return new ResponseEntity<>("User not logged in!", HttpStatus.UNAUTHORIZED);
         }
 
-        // Generate simulated sensor data
-        SensorData sensorData = SensorSimulator.generateSensorData();
+        // Retrieve the crop the user is associated with from the user table
+        Crop userCrop = user.getSelectedCrop(); // Assuming 'getSelectedCrop()' returns the crop the user is associated with
 
-        // Retrieve the crop from the database
-        Optional<Crop> cropOptional = cropRepository.findById(cropId);
-        if (cropOptional.isEmpty()) {
-            return new ResponseEntity<>("Crop not found!", HttpStatus.BAD_REQUEST);
+        if (userCrop == null) {
+            return new ResponseEntity<>("User does not have an associated crop.", HttpStatus.BAD_REQUEST);
         }
 
-        Crop crop = cropOptional.get();
+        // Generate simulated sensor data
+        SensorData sensorData = SensorSimulator.generateSensorData();
 
         // Convert SensorData to IrrigationData
         IrrigationData irrigationData = new IrrigationData();
         irrigationData.setHumidity(sensorData.getHumidity());
         irrigationData.setTemperature(sensorData.getTemperature());
         irrigationData.setMoisture(sensorData.getMoisture());
-        irrigationData.setCrop(crop);
-        irrigationData.setUser(user); // Set the logged-in user
+        irrigationData.setCrop(userCrop); // Use the crop associated with the user
+        irrigationData.setUser(user); // Associate the user with the irrigation data
 
         // Save to database
         irrigationDataRepository.save(irrigationData);
