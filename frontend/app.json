@@ -9,14 +9,20 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundlerIdentifier": "com.kjoel.agrisync",
+      "bundleIdentifier": "com.kjoel.agrisync",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.kjoel.agrisync"
+      "package": "com.kjoel.agrisync",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -58,7 +64,7 @@
       "router": {
         "origin": false
       },
-      "WEATHER_API_KEY" : "c2eff14bb3f1863ea1269334a7fff0b6",
+      "WEATHER_API_KEY": "c2eff14bb3f1863ea1269334a7fff0b6",
       "eas": {
         "projectId": "cc9b3f9d-0b0c-48d7-a787-bc07254da250"
       }

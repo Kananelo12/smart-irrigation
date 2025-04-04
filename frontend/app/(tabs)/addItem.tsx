@@ -44,7 +44,7 @@ const AddItem = () => {
     const fetchCropData = async () => {
       try {
         const response = await fetch(
-          "http://192.168.211.178:8080/api/getAllCrops"
+          "http://192.168.59.178:8080/api/getAllCrops"
         );
         if (response.ok) {
           const data: Crop[] = await response.json();

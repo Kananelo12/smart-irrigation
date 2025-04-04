@@ -29,7 +29,7 @@ const SignIn = () => {
     try {
       console.log(`\nUsername: ${form.email}\nPassword: ${form.password}`);
       console.log(form);
-      const response = await fetch(`http://192.168.211.178:8080/api/login`, {
+      const response = await fetch(`http://192.168.59.178:8080/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
