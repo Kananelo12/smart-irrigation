@@ -33,27 +33,25 @@ public class IrrigationController {
         this.cropRepository = cropRepository;
     }
 
-    // @GetMapping("/irrigateData")
-    // public ResponseEntity<IrrigationData> getLatestIrrigationData(@RequestParam Long cropId) {
-    //     // Retrieve the crop from the database using the provided crop ID
-    //     Optional<Crop> cropOptional = cropRepository.findById(cropId);
+    @GetMapping("/irrigateData")
+    public ResponseEntity<?> getLatestIrrigationData(HttpSession session) {
+        // Retrieve the logged-in user from the session
+        User user = (User) session.getAttribute("loggedInUser");
 
-    //     if (cropOptional.isEmpty()) {
-    //         return new ResponseEntity<>("Crop not found!", HttpStatus.BAD_REQUEST);
-    //     }
+        if (user == null) {
+            return new ResponseEntity<String>("User not logged in!", HttpStatus.UNAUTHORIZED);
+        }
 
-    //     Crop crop = cropOptional.get();
+        // Fetch the most recent irrigation data for the logged-in user
+        IrrigationData latestIrrigationData = irrigationDataRepository
+                .findTopByUserOrderByTimestampDesc(user);
 
-    //     // Fetch the most recent irrigation data for the specified crop
-    //     IrrigationData latestIrrigationData = irrigationDataRepository
-    //             .findTopByCropOrderByTimestampDesc(crop);
+        if (latestIrrigationData == null) {
+            return new ResponseEntity<>("No irrigation data found for this user!", HttpStatus.NOT_FOUND);
+        }
 
-    //     if (latestIrrigationData == null) {
-    //         return new ResponseEntity<>("No irrigation data found for this crop!", HttpStatus.NOT_FOUND);
-    //     }
-
-    //     return ResponseEntity.ok(latestIrrigationData);
-    // }
+        return ResponseEntity.ok(latestIrrigationData);
+    }
     @PostMapping("/storeSensorData")
     public ResponseEntity<String> storeSimulatedData(HttpSession session) {
         // Retrieve the logged-in user from session

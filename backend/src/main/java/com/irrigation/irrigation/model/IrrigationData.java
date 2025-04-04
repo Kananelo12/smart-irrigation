@@ -1,6 +1,7 @@
 package com.irrigation.irrigation.model;
 
 import jakarta.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "irrigationData")
@@ -25,6 +26,9 @@ public class IrrigationData {
     @ManyToOne
     @JoinColumn(name = "crop_id", referencedColumnName = "id", nullable = false)
     private Crop crop; // Establishing relationship with Crop
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     public IrrigationData() {
     }
