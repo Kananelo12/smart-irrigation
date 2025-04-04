@@ -25,6 +25,10 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role; // Establishing relationship with Role entity
 
+    @ManyToOne
+    @JoinColumn(name = "crop_id", referencedColumnName = "id")  // Foreign Key to the Crop table
+    private Crop selectedCrop;
+
     @Column(nullable = false)
     private String password; // In production, store hashed passwords
 
@@ -75,6 +79,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Crop getSelectedCrop() {
+        return selectedCrop;
+    }
+
+    public void setSelectedCrop(Crop selectedCrop) {
+        this.selectedCrop = selectedCrop;
     }
 }
 
