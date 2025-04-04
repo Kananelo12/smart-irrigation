@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "88460218112",
-    "project_id": "agrisync-6151b",
-    "storage_bucket": "agrisync-6151b.firebasestorage.app"
+    "project_number": "738262670391",
+    "project_id": "agrisync-c1d7c",
+    "storage_bucket": "agrisync-c1d7c.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:88460218112:android:5512b3d3fe1edfbb732de5",
+        "mobilesdk_app_id": "1:738262670391:android:d8b1d65e310b2514eef3b2",
         "android_client_info": {
           "package_name": "com.kjoel.agrisync"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDrjPn43MJZZv9RO6ZU7OBRQb64TcIzKYc"
+          "current_key": "AIzaSyBlGSXV7QFjBcRieIDQ__EPEI8L0Xi6GZE"
         }
       ],
       "services": {

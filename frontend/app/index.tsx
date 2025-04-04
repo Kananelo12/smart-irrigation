@@ -1,14 +1,25 @@
 import { Link, Redirect, router } from "expo-router";
-import { Alert, Image, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import CustomButton from "@/components/CustomButton";
 import { useEffect, useState } from "react";
 import React from "react";
+import { useNotification } from "@/libs/NotificationContext";
+import { ThemedView } from "@/components/ThemedView";
+import { StatusBar } from "expo-status-bar";
+import { ThemedText } from "@/components/ThemedText";
 
 // TODO: THIS IS THE WELCOME PAGE | ONBOARDING
 export default function Index() {
-
   const handlePress = () => {
     router.push("/sign-in");
   };
@@ -20,9 +31,9 @@ export default function Index() {
 
   const handleSkip = () => {
     Alert.alert("Message", "Navigate to authentication screens?", [
-      {text: "Cancel", style: "cancel"},
-      {text: "Yes", onPress: testMode }
-    ])
+      { text: "Cancel", style: "cancel" },
+      { text: "Yes", onPress: testMode },
+    ]);
   };
   handleSkip();
 

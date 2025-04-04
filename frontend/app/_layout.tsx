@@ -7,6 +7,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ActivityIndicator, Text } from "react-native";
 import { WeatherProvider } from "@/libs/WeatherProvider";
 import React from "react";
+import { NotificationProvider } from "@/libs/NotificationContext";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function RootLayout() {
   // Load custom fonts before rendering the app
@@ -31,24 +41,27 @@ export default function RootLayout() {
   // fontsLoaded = false; // TODO: REMOVE THIS LINE
 
   // show loading state if the fonts are not yet loaded
-  if (!fontsLoaded) return (
-    <SafeAreaView className="bg-white flex-1 justify-center items-center">
-      <ActivityIndicator color="#00BF7C" size="large" />
-      <Text className="text-base text-black-300 mt-3">Loading fonts...</Text>
-    </SafeAreaView>
-  );
+  if (!fontsLoaded)
+    return (
+      <SafeAreaView className="bg-white flex-1 justify-center items-center">
+        <ActivityIndicator color="#00BF7C" size="large" />
+        <Text className="text-base text-black-300 mt-3">Loading fonts...</Text>
+      </SafeAreaView>
+    );
 
   // Render the navigation stack once fonts are loaded
   return (
-    <WeatherProvider>
-      <StatusBar style="dark" />
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(root)" options={{ headerShown: false }} />
-      </Stack>
-      {/* <AppNavigator /> */}
-    </WeatherProvider>
+    <NotificationProvider>
+      <WeatherProvider>
+        <StatusBar style="dark" />
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(root)" options={{ headerShown: false }} />
+        </Stack>
+        {/* <AppNavigator /> */}
+      </WeatherProvider>
+    </NotificationProvider>
   );
 }

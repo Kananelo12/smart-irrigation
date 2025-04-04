@@ -3,6 +3,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import icons from "@/constants/icons";
 import { notifications } from "@/constants/data";
+import { router } from "expo-router";
 
 const NotificationCard = ({ item }: { item: any }) => {
   return (
@@ -37,7 +38,7 @@ const Notifications = () => {
         <View className="w-full mt-6">
           <View className="flex-row items-center justify-between px-3">
             <Text className="font-rubik text-black-200">Today</Text>
-            <Text className="font-rubik text-black-200">Clear all</Text>
+            <Text className="font-rubik text-black-200" onPress={() => router.push("/(root)/testnotifications")}>Clear all</Text>
           </View>
           <FlatList
             data={notifications}
