@@ -82,6 +82,7 @@ public class AuthController {
     public ResponseEntity<String> assignCropToUser(@RequestParam Long cropId, HttpSession session) {
         // Retrieve the logged-in user from the session
         User user = (User) session.getAttribute("loggedInUser");
+        System.out.println("Logged-in user: " + user); // Log user details
 
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in.");

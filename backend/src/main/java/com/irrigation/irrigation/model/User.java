@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 @Entity
 @Table(name = "users")
 public class User {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +18,7 @@ public class User {
     private String email; // Email should be lowercase
 
     @Column(nullable = false, unique = true)
-    @Pattern(regexp="^\\+266 ?\\d{8}$", message="Invalid phone number format. Please use '+266 56565406' or '+26656565406'.")
+    @Pattern(regexp = "^\\+266 ?\\d{8}$", message = "Invalid phone number format. Please use '+266 56565406' or '+26656565406'.")
     private String phoneNumber; // phone number of the user
 
     @ManyToOne
@@ -26,7 +26,7 @@ public class User {
     private Role role; // Establishing relationship with Role entity
 
     @ManyToOne
-    @JoinColumn(name = "crop_id", referencedColumnName = "id")  // Foreign Key to the Crop table
+    @JoinColumn(name = "crop_id", referencedColumnName = "id") // Foreign Key to the Crop table
     private Crop selectedCrop;
 
     @Column(nullable = false)
@@ -88,5 +88,15 @@ public class User {
     public void setSelectedCrop(Crop selectedCrop) {
         this.selectedCrop = selectedCrop;
     }
-}
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", role=" + (role != null ? role.getName() : "null") +
+                '}';
+    }
+}
