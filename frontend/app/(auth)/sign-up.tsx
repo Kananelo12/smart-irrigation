@@ -6,6 +6,8 @@ import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
+import { discoverApiBaseUrl } from "@/app/apiConfig";
+
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -26,10 +28,12 @@ const SignUp = () => {
       return;
     }
     try {
+      
       console.log(
         `\nFull names: ${form.name}\Email: ${form.email}\nPhone Number: ${form.phoneNumber}\nPassword: ${form.password}`
       );
-      const response = await fetch("http://172.25.28.95:8080/api/register", {
+      const baseUrl = await discoverApiBaseUrl();
+      const response = await fetch(`${baseUrl}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

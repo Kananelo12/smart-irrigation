@@ -107,6 +107,13 @@
 			<version>5.2.3</version> <!-- Use the latest version -->
 		</dependency>
 
+		<dependency>
+			<groupId>org.jmdns</groupId>
+			<artifactId>jmdns</artifactId>
+			<version>3.5.5</version>
+		</dependency>
+
+
 		<!-- Add Jakarta Servlet API explicitly if need be -->
 		<!-- <dependency>
 			<groupId>jakarta.servlet</groupId>

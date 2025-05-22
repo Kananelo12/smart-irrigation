@@ -17,6 +17,7 @@ import { useWeather } from "@/libs/WeatherProvider";
 import { WeatherData, isDaytime } from "@/utils/weatherUtils";
 import CustomButton from "@/components/CustomButton";
 import { SensorData } from "@/types/type";
+import { discoverApiBaseUrl } from "@/app/apiConfig";
 
 const Home = () => {
   const { weather, loading } = useWeather();
@@ -25,9 +26,11 @@ const Home = () => {
 
   const fetchSensorData = async () => {
     try {
+          const baseUrl = await discoverApiBaseUrl();
+          console.log("Discovered:", baseUrl);
       // fetch simulation data
       const response = await fetch(
-        "http://192.168.59.178:8080/api/irrigateData",
+        `${baseUrl}/api/irrigateData`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -45,6 +48,7 @@ const Home = () => {
     } catch (error) {
       Alert.alert("Error", `Something went wrong ${error}`);
       console.error("Error fetching simulation data:", error);
+      
     } finally {
       setLoadingSensorData(false);
     }

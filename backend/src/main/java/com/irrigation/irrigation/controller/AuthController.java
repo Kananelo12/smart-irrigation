@@ -10,7 +10,11 @@ import com.irrigation.irrigation.repository.UserRepository;
 import com.irrigation.irrigation.repository.CropRepository;
 
 import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -104,4 +108,5 @@ public class AuthController {
 
         return ResponseEntity.ok("Crop assigned to user successfully.");
     }
+    
 }
