@@ -8,6 +8,11 @@
     "scheme": "agrisync",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
     "ios": {
       "supportsTablet": true,
       "bundlerIdentifier": "com.kjoel.agrisync",
@@ -31,18 +36,6 @@
     },
     "plugins": [
       "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "dark": {
-            "image": "./assets/images/splash-icon-dark.png",
-            "backgroundColor": "#040715"
-          },
-          "resizeMode": "cover",
-          "backgroundColor": "#ffffff"
-        }
-      ],
       [
         "expo-font",
         {

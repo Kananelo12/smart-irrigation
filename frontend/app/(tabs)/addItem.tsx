@@ -1,45 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
   ScrollView,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import InputField from "@/components/InputField";
 import { SafeAreaView } from "react-native-safe-area-context";
+import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
 import icons from "@/constants/icons";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
-import { Crop } from "@/types/type";
+import { Crop } from "@/types/type"; // Ensure Crop type is defined appropriately
+
+interface Option {
+  label: string;
+  value: string; // We'll store crop.id as a string
+}
 
 const AddItem = () => {
+  // State for selected cropId (as string)
+  const [selectedCropId, setSelectedCropId] = useState<string>("");
+  const [temperature, setTemperature] = useState<string>("");
+  const [moisture, setMoisture] = useState<string>("");
+  const [humidity, setHumidity] = useState<string>("");
 
-  interface Option {
-    label: string;
-    value: string;
-  }
-
-  const [cropName, setCropName] = useState("");
-  const [temperature, setTemperature] = useState("");
-  const [moisture, setMoisture] = useState("");
-  const [humidity, setHumidity] = useState("");
-
+  // Store full crop data from API
   const [cropData, setCropData] = useState<Crop[]>([]);
+  // Options for Picker: label = crop name, value = crop.id as string
   const [cropOptions, setCropOptions] = useState<Option[]>([]);
 
-  const handleSave = () => {
-    console.log({
-      cropName,
-      temperature,
-      moisture,
-      humidity,
-    });
-    // Add your save logic here
+  // Function to call assignCropToUser endpoint
+  const assignCropToUser = async () => {
+    if (!selectedCropId) {
+      Alert.alert("Error", "Please select a crop first.");
+      return;
+    }
+
+    try {
+      // Build the URL with query parameter
+      const url = `http://192.168.104.178:8080/api/assignCropToUser?cropId=${selectedCropId}`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const responseText = await response.text();
+      if (response.ok) {
+        Alert.alert("Success", responseText);
+        const results = await fetch(
+          "http://192.168.104.178:8080/api/storeSensorData",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        if (results.ok) {
+          Alert.alert("Success", "Sensor data stored successfully.");
+        } else {
+          Alert.alert("Error", "Failed to store sensor data.");
+        }
+      } else {
+        Alert.alert("Error", responseText);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Unable to assign crop. Please try again.");
+      console.error("Error assigning crop to user:", error);
+    }
   };
 
+  // Fetch crop data when component mounts
   useEffect(() => {
     const fetchCropData = async () => {
       try {
@@ -48,14 +81,12 @@ const AddItem = () => {
         );
         if (response.ok) {
           const data: Crop[] = await response.json();
-          // Store full crop data
           setCropData(data);
 
-          // Map the API data to the format needed by the Picker:
-          // For example, we set label and value to the crop's name.
-          const options: Option[] = data.map((crop: Crop): Option => ({
+          // Map each crop to an Option: label = name, value = id as string
+          const options: Option[] = data.map((crop) => ({
             label: crop.name,
-            value: crop.name,
+            value: crop.id.toString(),
           }));
           setCropOptions(options);
         } else {
@@ -69,10 +100,17 @@ const AddItem = () => {
     fetchCropData();
   }, []);
 
-  // Update input fields when a crop is selected
+  // When a crop is selected, update the input fields using the selected crop's id
   useEffect(() => {
-    if (!cropName) return; // Prevents running when no crop is selected
-    const selectedCrop = cropData.find((crop) => crop.name === cropName);
+    if (!selectedCropId) {
+      setTemperature("");
+      setMoisture("");
+      setHumidity("");
+      return;
+    }
+    const selectedCrop = cropData.find(
+      (crop) => crop.id.toString() === selectedCropId
+    );
     if (selectedCrop) {
       setTemperature(selectedCrop.temperatureRequirement.toString());
       setMoisture(selectedCrop.moistureRequirement.toString());
@@ -82,7 +120,7 @@ const AddItem = () => {
       setMoisture("");
       setHumidity("");
     }
-  }, [cropName, cropData]);
+  }, [selectedCropId, cropData]);
 
   return (
     <SafeAreaView className="flex-1">
@@ -96,23 +134,23 @@ const AddItem = () => {
           </Text>
         </View>
 
-        <View className=" px-3">
-          {/* Input: Crop Name using Picker */}
+        <View className="px-3">
+          {/* Picker: Select Crop */}
           <View className="mb-6 mt-10">
             <Text className="font-rubik text-base mb-2">Select Crop</Text>
             <View className="border border-gray-300 rounded-md bg-gray-50">
               <Picker
-                selectedValue={cropName}
-                onValueChange={(value) => setCropName(value)}
+                selectedValue={selectedCropId}
+                onValueChange={(value) => setSelectedCropId(value)}
                 style={{ width: "100%", height: 50 }}
                 dropdownIconColor="#000"
               >
                 <Picker.Item label="Select Crop" value="" />
-                {cropOptions.map((crop) => (
+                {cropOptions.map((option) => (
                   <Picker.Item
-                    key={crop.value}
-                    label={crop.label}
-                    value={crop.value}
+                    key={option.value}
+                    label={option.label}
+                    value={option.value}
                   />
                 ))}
               </Picker>
@@ -127,7 +165,7 @@ const AddItem = () => {
               keyboardType="numeric"
               value={temperature}
               onChangeText={setTemperature}
-              // editable={false}
+              editable={false}
               selectTextOnFocus={false}
             />
           </View>
@@ -158,9 +196,10 @@ const AddItem = () => {
             />
           </View>
         </View>
+
         {/* Save Button */}
-        <View className="mt-8 px-3 ">
-          <CustomButton title="Add Crop" handlePress={handleSave} />
+        <View className="mt-8 px-3">
+          <CustomButton title="Add Crop" handlePress={assignCropToUser} />
         </View>
       </ScrollView>
     </SafeAreaView>
