@@ -8,15 +8,15 @@ import { ActivityIndicator, Text } from "react-native";
 import { WeatherProvider } from "@/libs/WeatherProvider";
 import React from "react";
 import { NotificationProvider } from "@/libs/NotificationContext";
-import * as Notifications from "expo-notifications";
+// import * as Notifications from "expo-notifications";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: false,
+//     shouldSetBadge: false,
+//   }),
+// });
 
 export default function RootLayout() {
   // Load custom fonts before rendering the app
@@ -51,7 +51,7 @@ export default function RootLayout() {
 
   // Render the navigation stack once fonts are loaded
   return (
-    <NotificationProvider>
+    // <NotificationProvider>
       <WeatherProvider>
         <StatusBar style="dark" />
         <Stack>
@@ -62,6 +62,6 @@ export default function RootLayout() {
         </Stack>
         {/* <AppNavigator /> */}
       </WeatherProvider>
-    </NotificationProvider>
+    // </NotificationProvider>
   );
 }

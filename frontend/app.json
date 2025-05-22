@@ -15,8 +15,6 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundlerIdentifier": "com.kjoel.agrisync",
-      "bundleIdentifier": "com.kjoel.agrisync",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
