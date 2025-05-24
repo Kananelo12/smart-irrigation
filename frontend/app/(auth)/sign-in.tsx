@@ -29,6 +29,7 @@ const SignIn = () => {
     // TODO: add validation for password length and security
     try {
       const baseUrl = await discoverApiBaseUrl();
+      console.log(`Base URL: ${baseUrl}`);
       console.log(`\nUsername: ${form.email}\nPassword: ${form.password}`);
       console.log(form);
       const response = await fetch(`${baseUrl}/api/login`, {

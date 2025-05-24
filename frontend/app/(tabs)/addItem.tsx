@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
 import icons from "@/constants/icons";
-import { Picker } from "@react-native-picker/picker";
+import DropDownPicker from "react-native-dropdown-picker";
 import { router } from "expo-router";
 import { Crop } from "@/types/type"; // Ensure Crop type is defined appropriately
 
@@ -21,106 +21,90 @@ interface Option {
 }
 
 const AddItem = () => {
+  // dropdown state
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState<Option[]>([]);
+  const [value, setValue] = useState<string>(""); // selected cropId
+
   // State for selected cropId (as string)
-  const [selectedCropId, setSelectedCropId] = useState<string>("");
   const [temperature, setTemperature] = useState<string>("");
   const [moisture, setMoisture] = useState<string>("");
   const [humidity, setHumidity] = useState<string>("");
 
   // Store full crop data from API
   const [cropData, setCropData] = useState<Crop[]>([]);
-  // Options for Picker: label = crop name, value = crop.id as string
-  const [cropOptions, setCropOptions] = useState<Option[]>([]);
 
-  // Function to call assignCropToUser endpoint
+
+  // assignCrop endpoint + then storeSensorData
   const assignCropToUser = async () => {
-    if (!selectedCropId) {
+    if (!value) {
       Alert.alert("Error", "Please select a crop first.");
       return;
     }
-
     try {
-      // Build the URL with query parameter
-      const url = `http://192.168.104.178:8080/api/assignCropToUser?cropId=${selectedCropId}`;
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        `http://192.168.139.178:8080/api/assignCropToUser?cropId=${value}`,
+        { method: "POST" }
+      );
 
-      const responseText = await response.text();
+      const msg = await response.text();
+      // if (!response.ok) throw new Error(msg);
       if (response.ok) {
-        Alert.alert("Success", responseText);
-        const results = await fetch(
-          "http://192.168.104.178:8080/api/storeSensorData",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-          }
+         Alert.alert("Success", msg);
+        const storeRes = await fetch(
+          "http://192.168.139.178:8080/api/storeSensorData",
+          { method: "POST"}
         );
 
-        if (results.ok) {
+        if (storeRes.ok) {
           Alert.alert("Success", "Sensor data stored successfully.");
         } else {
           Alert.alert("Error", "Failed to store sensor data.");
         }
       } else {
-        Alert.alert("Error", responseText);
+        Alert.alert("Error", msg);
       }
-    } catch (error) {
-      Alert.alert("Error", "Unable to assign crop. Please try again.");
-      console.error("Error assigning crop to user:", error);
+
+    } catch (error: any) {
+      Alert.alert("Error", `Error assigning crop to user: ${error}`);
+      console.error("Error", error.message || "Something went wrong.");
     }
   };
 
-  // Fetch crop data when component mounts
   useEffect(() => {
-    const fetchCropData = async () => {
+    (async () => {
       try {
-        const response = await fetch(
-          "http://192.168.70.120:8080/api/getAllCrops"
+        const resp = await fetch("http://192.168.139.178:8080/api/getAllCrops");
+        if (!resp.ok) throw new Error(resp.statusText);
+        const data: Crop[] = await resp.json();
+        setCropData(data);
+        setItems(
+          data.map((c) => ({
+            label: c.name,
+            value: c.id.toString(),
+          }))
         );
-        if (response.ok) {
-          const data: Crop[] = await response.json();
-          setCropData(data);
-
-          // Map each crop to an Option: label = name, value = id as string
-          const options: Option[] = data.map((crop) => ({
-            label: crop.name,
-            value: crop.id.toString(),
-          }));
-          setCropOptions(options);
-        } else {
-          console.error("Failed to fetch crop data:", response.statusText);
-        }
       } catch (error) {
-        console.error("Error fetching crop data:", error);
+        console.error("Failed to load crops:", error);
       }
-    };
-
-    fetchCropData();
+    })();
   }, []);
 
-  // When a crop is selected, update the input fields using the selected crop's id
+  // when dropdown value changes, auto-fill
   useEffect(() => {
-    if (!selectedCropId) {
+    if (!value) {
       setTemperature("");
       setMoisture("");
       setHumidity("");
       return;
     }
-    const selectedCrop = cropData.find(
-      (crop) => crop.id.toString() === selectedCropId
-    );
-    if (selectedCrop) {
-      setTemperature(selectedCrop.temperatureRequirement.toString());
-      setMoisture(selectedCrop.moistureRequirement.toString());
-      setHumidity(selectedCrop.humidityRequirement.toString());
-    } else {
-      setTemperature("");
-      setMoisture("");
-      setHumidity("");
+    const sel = cropData.find((c) => c.id.toString() === value);
+    if (sel) {
+      setTemperature(sel.temperatureRequirement.toString());
+      setMoisture(sel.moistureRequirement.toString());
+      setHumidity(sel.humidityRequirement.toString());
     }
-  }, [selectedCropId, cropData]);
+  }, [value, cropData]);
 
   return (
     <SafeAreaView className="flex-1">
@@ -135,25 +119,24 @@ const AddItem = () => {
         </View>
 
         <View className="px-3">
-          {/* Picker: Select Crop */}
+          {/* DropDownPicker: Select Crop */}
           <View className="mb-6 mt-10">
             <Text className="font-rubik text-base mb-2">Select Crop</Text>
             <View className="border border-gray-300 rounded-md bg-gray-50">
-              <Picker
-                selectedValue={selectedCropId}
-                onValueChange={(value) => setSelectedCropId(value)}
-                style={{ width: "100%", height: 50 }}
-                dropdownIconColor="#000"
-              >
-                <Picker.Item label="Select Crop" value="" />
-                {cropOptions.map((option) => (
-                  <Picker.Item
-                    key={option.value}
-                    label={option.label}
-                    value={option.value}
-                  />
-                ))}
-              </Picker>
+              <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                // onPress={() => (
+                //   Alert.alert("Crop ID:", value)
+                // )}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                placeholder="Select Crop"
+                listMode="SCROLLVIEW"
+                scrollViewProps={{ nestedScrollEnabled: true }}
+              />
             </View>
           </View>
 
