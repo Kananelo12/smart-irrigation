@@ -6,7 +6,7 @@ import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
-import { discoverApiBaseUrl } from "@/app/apiConfig";
+import { discoverApiBaseUrl } from "@/utils/apiConfig";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -50,7 +50,7 @@ const SignIn = () => {
         Alert.alert("Error", errorMessage);
       }
     } catch (error) {
-      Alert.alert("Error", "Unable to connect to the server", [
+      Alert.alert("Error", `Unable to connect to the server: ${error}`, [
         { text: "Cancel", style: "cancel" },
         { text: "Test Mode", onPress: testMode },
       ]);

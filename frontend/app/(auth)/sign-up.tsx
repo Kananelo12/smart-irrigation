@@ -6,7 +6,7 @@ import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
-import { discoverApiBaseUrl } from "@/app/apiConfig";
+import { discoverApiBaseUrl } from "@/utils/apiConfig";
 
 
 const SignUp = () => {

@@ -17,7 +17,7 @@ import { useWeather } from "@/libs/WeatherProvider";
 import { WeatherData, isDaytime } from "@/utils/weatherUtils";
 import CustomButton from "@/components/CustomButton";
 import { SensorData } from "@/types/type";
-import { discoverApiBaseUrl } from "@/app/apiConfig";
+import { discoverApiBaseUrl } from "@/utils/apiConfig";
 
 const Home = () => {
   const { weather, loading } = useWeather();
@@ -27,7 +27,7 @@ const Home = () => {
   const fetchSensorData = async () => {
     try {
           const baseUrl = await discoverApiBaseUrl();
-          console.log("Discovered:", baseUrl);
+          console.log("\nDiscovered:", baseUrl);
       // fetch simulation data
       const response = await fetch(
         `${baseUrl}/api/irrigateData`,
