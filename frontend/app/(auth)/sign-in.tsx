@@ -6,7 +6,7 @@ import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
-import { discoverApiBaseUrl } from "@/utils/apiConfig";
+// import { discoverApiBaseUrl } from "@/utils/apiConfig";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -28,11 +28,11 @@ const SignIn = () => {
     // TODO: add validation for email syntax using expressions
     // TODO: add validation for password length and security
     try {
-      const baseUrl = await discoverApiBaseUrl();
-      console.log(`Base URL: ${baseUrl}`);
+      // const baseUrl = await discoverApiBaseUrl();
+      // console.log(`Base URL: ${baseUrl}`);
       console.log(`\nUsername: ${form.email}\nPassword: ${form.password}`);
       console.log(form);
-      const response = await fetch(`${baseUrl}/api/login`, {
+      const response = await fetch(`http://192.168.139.178:8080/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
