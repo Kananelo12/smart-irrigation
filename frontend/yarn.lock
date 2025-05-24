@@ -1730,13 +1730,6 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.14.tgz#1433419d73b2a7ebfc6918dcefd2ec0d5cd698f2"
   integrity sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==
 
-"@types/react-native-zeroconf@^0.13.1":
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/@types/react-native-zeroconf/-/react-native-zeroconf-0.13.1.tgz#59ae87bf2b86054a7056beec2c2a31f9e713bd4e"
-  integrity sha512-edAbIS+1/o9OTYU6S7stNli9ATHlJA2z2jOv6ZC+n38Q2qyUKqzycuD+hLqRLIxe1BibYYcpOoJtuoBkLSsdYg==
-  dependencies:
-    "@types/node" "*"
-
 "@types/react-test-renderer@^18.3.0":
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-18.3.1.tgz#225bfe8d4ad7ee3b04c2fa27642bb74274a5961d"
