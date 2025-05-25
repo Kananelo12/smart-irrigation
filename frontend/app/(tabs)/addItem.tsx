@@ -44,7 +44,7 @@ const AddItem = () => {
     }
     try {
       const response = await fetch(
-        `http://${NGROK_URL}/api/assignCropToUser?cropId=${value}`,
+        `${NGROK_URL}/api/assignCropToUser?cropId=${value}`,
         { method: "POST" }
       );
 
@@ -53,7 +53,7 @@ const AddItem = () => {
       if (response.ok) {
          Alert.alert("Success", msg);
         const storeRes = await fetch(
-          `http://${NGROK_URL}/api/storeSensorData`,
+          `${NGROK_URL}/api/storeSensorData`,
           { method: "POST"}
         );
 
@@ -75,7 +75,7 @@ const AddItem = () => {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await fetch(`http://${NGROK_URL}/api/getAllCrops`);
+        const resp = await fetch(`${NGROK_URL}/api/getAllCrops`);
         if (!resp.ok) throw new Error(resp.statusText);
         const data: Crop[] = await resp.json();
         setCropData(data);

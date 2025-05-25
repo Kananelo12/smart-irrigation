@@ -72,7 +72,7 @@ const ImportFile = () => {
     } as any);
 
     try {
-      const response = await fetch(`http://${NGROK_URL}/api/importExcel`, {
+      const response = await fetch(`${NGROK_URL}/api/importExcel`, {
         method: "POST",
         body: formData,
         headers: {
