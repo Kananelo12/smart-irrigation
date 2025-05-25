@@ -14,6 +14,7 @@ import icons from "@/constants/icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { router } from "expo-router";
 import { Crop } from "@/types/type"; // Ensure Crop type is defined appropriately
+import NGROK_URL from "@/utils/ngrokConfig";
 
 interface Option {
   label: string;
@@ -43,7 +44,7 @@ const AddItem = () => {
     }
     try {
       const response = await fetch(
-        `http://192.168.139.178:8080/api/assignCropToUser?cropId=${value}`,
+        `http://${NGROK_URL}/api/assignCropToUser?cropId=${value}`,
         { method: "POST" }
       );
 
@@ -52,7 +53,7 @@ const AddItem = () => {
       if (response.ok) {
          Alert.alert("Success", msg);
         const storeRes = await fetch(
-          "http://192.168.139.178:8080/api/storeSensorData",
+          `http://${NGROK_URL}/api/storeSensorData`,
           { method: "POST"}
         );
 
@@ -74,7 +75,7 @@ const AddItem = () => {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await fetch("http://192.168.139.178:8080/api/getAllCrops");
+        const resp = await fetch(`http://${NGROK_URL}/api/getAllCrops`);
         if (!resp.ok) throw new Error(resp.statusText);
         const data: Crop[] = await resp.json();
         setCropData(data);

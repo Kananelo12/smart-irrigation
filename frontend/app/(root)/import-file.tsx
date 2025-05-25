@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Alert, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as DocumentPicker from "expo-document-picker";
+import NGROK_URL from "@/utils/ngrokConfig";
 
 type DocumentPickerResult = {
   canceled: boolean;
@@ -71,7 +72,7 @@ const ImportFile = () => {
     } as any);
 
     try {
-      const response = await fetch("http://192.168.211.178:8080/api/importExcel", {
+      const response = await fetch(`http://${NGROK_URL}/api/importExcel`, {
         method: "POST",
         body: formData,
         headers: {

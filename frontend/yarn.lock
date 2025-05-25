@@ -1737,13 +1737,6 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.14.tgz"
   integrity sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==
 
-"@types/react-native-zeroconf@^0.13.1":
-  version "0.13.1"
-  resolved "https://registry.npmjs.org/@types/react-native-zeroconf/-/react-native-zeroconf-0.13.1.tgz"
-  integrity sha512-edAbIS+1/o9OTYU6S7stNli9ATHlJA2z2jOv6ZC+n38Q2qyUKqzycuD+hLqRLIxe1BibYYcpOoJtuoBkLSsdYg==
-  dependencies:
-    "@types/node" "*"
-
 "@types/react-test-renderer@^18.3.0":
   version "18.3.1"
   resolved "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-18.3.1.tgz"
@@ -3109,11 +3102,6 @@ event-target-shim@^5.0.0, event-target-shim@^5.0.1:
   version "5.0.1"
   resolved "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
-
-events@^3.0.0:
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/events/-/events-3.3.0.tgz"
-  integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
 exec-async@^2.2.0:
   version "2.2.0"
@@ -5892,13 +5880,6 @@ react-native-webview@13.13.5:
   dependencies:
     escape-string-regexp "^4.0.0"
     invariant "2.2.4"
-
-react-native-zeroconf@^0.13.8:
-  version "0.13.8"
-  resolved "https://registry.npmjs.org/react-native-zeroconf/-/react-native-zeroconf-0.13.8.tgz"
-  integrity sha512-frGS1xNbNCA7BfETSubNYODu7s7mlU55vgArEzZW9EuSQ8SYqlNQC5zpKHDZEAXy4fFqe+CgnMCxKAjQqYM6XA==
-  dependencies:
-    events "^3.0.0"
 
 react-native@0.79.2:
   version "0.79.2"

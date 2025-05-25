@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   View,
   Text,
   Image,
@@ -15,9 +14,8 @@ import SearchBox from "@/components/SearchBox";
 import tw from "tailwind-react-native-classnames";
 import { useWeather } from "@/libs/WeatherProvider";
 import { WeatherData, isDaytime } from "@/utils/weatherUtils";
-import CustomButton from "@/components/CustomButton";
 import { SensorData } from "@/types/type";
-import { discoverApiBaseUrl } from "@/utils/apiConfig";
+import NGROK_URL from "@/utils/ngrokConfig";
 
 const Home = () => {
   const { weather, loading } = useWeather();
@@ -26,11 +24,9 @@ const Home = () => {
 
   const fetchSensorData = async () => {
     try {
-          const baseUrl = await discoverApiBaseUrl();
-          console.log("\nDiscovered:", baseUrl);
       // fetch simulation data
       const response = await fetch(
-        `${baseUrl}/api/irrigateData`,
+        `${NGROK_URL}/api/irrigateData`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

@@ -6,7 +6,7 @@ import icons from "@/constants/icons";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import GoogleOAuth from "@/components/GoogleOAuth";
-import { discoverApiBaseUrl } from "@/utils/apiConfig";
+import NGROK_URL from "@/utils/ngrokConfig";
 
 
 const SignUp = () => {
@@ -32,8 +32,7 @@ const SignUp = () => {
       console.log(
         `\nFull names: ${form.name}\Email: ${form.email}\nPhone Number: ${form.phoneNumber}\nPassword: ${form.password}`
       );
-      const baseUrl = await discoverApiBaseUrl();
-      const response = await fetch(`${baseUrl}/api/register`, {
+      const response = await fetch(`${NGROK_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
